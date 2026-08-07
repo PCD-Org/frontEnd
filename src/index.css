@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+
+@theme {
+
+  --color-primary: #006c48;       
+  --color-primary-dark: #081c15; 
+  --color-mint: #dbefe2;         
+  --color-surface: #f8f9f8;       
+  --color-surface-card: #e8e8e5;  
+}
+ 

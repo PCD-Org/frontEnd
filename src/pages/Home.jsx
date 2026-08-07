@@ -1,6 +1,15 @@
+import { HeroSection } from "../components/home/HeroSection";
+import { OurGoals } from "../components/home/OurGoals";
+import { Qoute } from "../components/home/Qoute";
+import { WhoWeAre } from "../components/home/WhoWeAre";
 
 export default function Home() {
   return (
-    <div className="p-4 rounded-2xl bg-amber-300 w-fit">Home</div>
+    <>
+      <HeroSection /> 
+      <WhoWeAre />
+      <OurGoals />
+      <Qoute />
+    </>
   )
 }
