@@ -1,4 +1,5 @@
 import { Globe, Rocket, Users, Accessibility, HandHeart } from 'lucide-react';
+import { motion } from "motion/react";
 import { Container } from "../ui/Container";
 import { GoalCard } from "./GoalCard";
 
@@ -43,30 +44,37 @@ const goalsData = [
 
 export const OurGoals = () => {
     return (
-        <section className="py-16 bg-surface-card mb-12" dir="rtl">
+        <motion.section className="py-16 bg-surface-card mb-12" dir="rtl">
             <Container className="flex flex-col gap-12">
 
-                <div className="flex flex-col justify-center items-center gap-3 text-center max-w-2xl mx-auto">
+                <motion.div
+                    className="flex flex-col justify-center items-center gap-3 text-center max-w-2xl mx-auto"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                >
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-950">
                         أهدافنا الاستراتيجية
                     </h2>
                     <p className="text-gray-700 text-base md:text-lg leading-relaxed">
                         نعمل وفق رؤية واضحة تهدف إلى النهوض بالواقع البيئي والتنموي في المجتمع الفلسطيني عبر محاور عمل متكاملة
                     </p>
-                </div>
+                </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {goalsData.map((item) => (
+                    {goalsData.map((item, index) => (
                         <GoalCard
                             key={item.id}
                             icon={item.icon}
                             name={item.name}
                             description={item.description}
+                            index={index}
                         />
                     ))}
                 </div>
 
             </Container>
-        </section>
+        </motion.section>
     );
 };

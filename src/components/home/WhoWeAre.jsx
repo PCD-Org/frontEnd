@@ -1,13 +1,21 @@
 import { Leaf } from 'lucide-react'; 
+import { motion } from "motion/react";
 import { Container } from '../ui/Container';
 
 
 export const WhoWeAre = () => {
   return (
-    <section className="py-16 px-4 md:px-8 bg-gray-50 rounded-2xl mb-12">
+    <motion.section className="py-16 px-4 md:px-8 bg-gray-50 rounded-2xl mb-12">
         
         <Container className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">        
-        <div className="space-y-8 text-right" dir="rtl">
+        <motion.div
+          className="space-y-8 text-right"
+          dir="rtl"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
           
           <div className="flex items-center gap-2 rounded-2xl p-2 bg-primary w-fit">
             <Leaf className="w-5 h-5 text-white" /> 
@@ -37,19 +45,37 @@ export const WhoWeAre = () => {
 
           <div className="flex flex-col sm:flex-row gap-6 pt-8">
             {/* بطاقة سنة التأسيس */}
-            <div className="bg-surface p-6 rounded-xl border border-surface-card flex flex-col items-center flex-1 shadow-sm transition-transform hover:scale-105">
+            <motion.div
+              className="bg-surface p-6 rounded-xl border border-surface-card flex flex-col items-center flex-1 shadow-sm transition-transform hover:scale-105"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0 }}
+            >
               <span className="text-5xl font-extrabold text-primary">2023</span>
               <span className="text-xl font-semibold text-gray-900 mt-2">تأسيس الهيئة</span>
-            </div>
+            </motion.div>
 
-            <div className="bg-surface p-6 rounded-xl border border-surface-card flex flex-col items-center flex-1 shadow-sm transition-transform hover:scale-105">
+            <motion.div
+              className="bg-surface p-6 rounded-xl border border-surface-card flex flex-col items-center flex-1 shadow-sm transition-transform hover:scale-105"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
+            >
               <span className="text-5xl font-extrabold text-primary">+50</span>
               <span className="text-xl font-semibold text-gray-900 mt-2">مشروع منفذ</span>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className='relative'>
+        <motion.div
+          className='relative'
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
+        >
             <div className="relative group overflow-hidden rounded-3xl shadow-lg transition-all duration-300 hover:shadow-primary/30">
           <img 
             src="/src/assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg" 
@@ -64,8 +90,8 @@ export const WhoWeAre = () => {
         <div className='bg-primary-dark absolute w-fit p-4 -bottom-4  -right-2  drop-shadow-lg rounded-2xl'>
             <h3 className='text-white'>يد تبني و يد تعمر</h3>
           </div>
-        </div>
+        </motion.div>
       </Container>
-    </section>
+    </motion.section>
   );
 };

@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import { motion } from "motion/react";
 
 export const HeroSection = () => {
   return (
-    <div 
+    <motion.header 
       className="relative w-full h-[85vh] min-h-[500px] bg-cover bg-center flex items-center justify-start px-6 md:px-16"
       style={{
         backgroundImage: `url('/src/assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg')`
@@ -10,7 +11,13 @@ export const HeroSection = () => {
     >
       <div className="absolute inset-0 bg-black/20" />
 
-      <div className="relative z-10 w-full max-w-xl p-8 md:p-12 rounded-2xl bg-black/30 backdrop-blur-md border border-white/10 text-white text-right space-y-6 mr-0 md:mr-10">
+      <motion.div
+        className="relative z-10 w-full max-w-xl p-8 md:p-12 rounded-2xl bg-black/30 backdrop-blur-md border border-white/10 text-white text-right space-y-6 mr-0 md:mr-10"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
         
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-wide leading-tight">
           يد تبني، يد تعمر
@@ -37,7 +44,7 @@ export const HeroSection = () => {
           </Link>
         </div>
 
-      </div>
-    </div>
+      </motion.div>
+    </motion.header>
   );
 };
