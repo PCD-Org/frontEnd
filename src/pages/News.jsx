@@ -1,5 +1,6 @@
-function About() {
-  return <h1>About Page</h1>;
-}
 
-export default About;
+export default function News() {
+  return (
+    <div>News Page</div>
+  )
+}
