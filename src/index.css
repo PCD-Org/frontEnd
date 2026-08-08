@@ -9,4 +9,38 @@
   --color-surface: #f8f9f8;       
   --color-surface-card: #e8e8e5;  
 }
+/* ================================
+   Global Layout
+================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+}
+
+/* المحتوى تحت الـ Fixed Header */
+.site-main {
+  padding-top: 75px;
+  width: 100%;
+  min-height: calc(100vh - 75px);
+}
+
+/* ================================
+   Mobile
+================================ */
+
+@media (max-width: 768px) {
+  .site-main {
+    padding-top: 75px;
+  }
+}
  
