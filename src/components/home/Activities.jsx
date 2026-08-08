@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ActivityCard from "../ActivityCard";
+import CategoryFilter from "../CategoryFilter";
 
 const activitiesData = [
   {
@@ -49,33 +50,12 @@ const Activities = () => {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="flex flex-col lg:flex-row-reverse justify-between items-center mb-16 gap-8"
       >
-          {/* أزرار التصنيف  */}
-        <div className="bg-[#F4F5F0] p-1.5 rounded-full flex items-center gap-1 dir-rtl">
-          {categories.map((cat) => {
-            const isActive = activeCategory === cat.slug;
-            return (
-              <button
-                key={cat.slug}
-                onClick={() => setActiveCategory(cat.slug)}
-                className={`relative px-6 py-2.5 rounded-full text-base font-semibold transition-colors duration-200 z-10 ${
-                  isActive ? "text-white" : "text-gray-700 hover:text-[#0D3B2E]"
-                }`}
-              >
-                {/*خلفية الزر النشط ص */}
-                {isActive && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute inset-0 bg-[#0D3B2E] rounded-full z-[-1] shadow-sm"
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  />
-                )}
-                {cat.name}
-              </button>
-            );
-          })}
-        </div>
+        <CategoryFilter
+          categories={categories}
+          activeCategory={activeCategory}
+          onSelectCategory={setActiveCategory}
+        />
         
-        {/* العنوان والوصف */}
         <div className="text-right flex-1">
           <h2 className="text-[40px] font-bold text-[#0D3B2E] leading-tight">
             آخر الأنشطة والمشاريع
@@ -85,9 +65,11 @@ const Activities = () => {
           </p>
         </div>
       </motion.div>
-                {/* cards  */}
+
       <motion.div 
-        layout className="grid gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3" >
+        layout 
+        className="grid gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3"
+      >
         <AnimatePresence mode="popLayout">
           {filteredActivities.length > 0 ? (
             filteredActivities.map((item) => (
@@ -121,7 +103,6 @@ const Activities = () => {
         </AnimatePresence>
       </motion.div>
 
-      {/* الزرـ Hover */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
