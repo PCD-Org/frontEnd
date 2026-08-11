@@ -1,6 +1,6 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft , Calendar  } from "lucide-react";
 
-const ActivityCard = ({ image, category, title,description, link = "#", }) => {
+const ActivityCard = ({ image, category, title,description,date , link = "#", }) => {
    const categoryColors = {
   "ورشات": "bg-red-100 text-red-700",
   "دعم نفسي": "bg-green-100 text-green-700",
@@ -24,6 +24,14 @@ const ActivityCard = ({ image, category, title,description, link = "#", }) => {
 
       {/* Content */}
       <div className="p-6 flex flex-col flex-1 text-right">
+        {/* Date  */}
+        {date && (
+          <div className="flex items-center gap-1.5 text-gray-400 text-xs font-medium mb-2.5">
+            <Calendar size={14} />
+            <span>{date}</span>
+          </div>
+        )}
+        
         <h3 className="text-xl font-bold text-gray-900 leading-8 mb-3">
           {title}
         </h3>

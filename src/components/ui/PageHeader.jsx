@@ -9,7 +9,7 @@ export const PageHeader = ({
   const isDark = variant === 'dark';
   return (
     <div 
-      className={`w-full py-16 md:py-24 transition-colors ${
+      className={`w-full py-16 md:py-18 transition-colors ${
         isDark ? 'bg-emerald-950 text-white' : 'bg-transparent text-gray-900'
       } ${className}`}
     >

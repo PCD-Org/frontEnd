@@ -2,37 +2,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ActivityCard from "../ActivityCard";
 import CategoryFilter from "../CategoryFilter";
+import { categories, activitiesData } from "../../activitiesData";
 
-const activitiesData = [
-  {
-    id: 1,
-    image: "/src/assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg",
-    category: "ورشات",
-    title: "جلسة حوارية حول واقع التعليم والتنمية في غزة",
-    description: "مشاركة خبراء وأكاديميين في وضع خارطة طريق لتحسين المنظومة التعليمية والبيئية في ظل التحديات الراهنة.",
-  },
-  {
-    id: 2,
-    image: "/src/assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg",
-    category: "دعم نفسي",
-    title: "جلسات تفريغ نفسي بالتعاون مع مركز شؤون المرأة",
-    description: "تنفيذ ورشات عمل متخصصة للدعم النفسي والاجتماعي للفئات الأكثر هشاشة لتعزيز الصحة النفسية المجتمعية.",
-  },
-  {
-    id: 3,
-    image: "/src/assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg",
-    category: "إغاثة",
-    title: "الهيئة وصندوق الاستثمار الفلسطيني يوزعون طروداً غذائية",
-    description: "توزيع مساعدات غذائية طارئة للعائلات المتضررة في غزة لتعزيز صمودهم وتلبية احتياجاتهم الأساسية.",
-  },
-];
-
-const categories = [
-  { name: "الكل", slug: "الكل" },
-  { name: "مشاريع إغاثية", slug: "إغاثة" },
-  { name: "تنموية", slug: "تنموية" },
-  { name: "ورشات عمل", slug: "ورشات" },
-];
 
 const Activities = () => {
   const [activeCategory, setActiveCategory] = useState("الكل");
@@ -54,6 +25,7 @@ const Activities = () => {
           categories={categories}
           activeCategory={activeCategory}
           onSelectCategory={setActiveCategory}
+          variant="container"
         />
         
         <div className="text-right flex-1">
