@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
+import heroBackground from "../../assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg";
 
 export const HeroSection = () => {
   return (
     <motion.header 
       className="relative w-full h-[85vh] min-h-[500px] bg-cover bg-center flex items-center justify-start px-6 md:px-16"
       style={{
-        backgroundImage: `url('/src/assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg')`
+        backgroundImage: `url(${heroBackground})`
       }}
     >
       <div className="absolute inset-0 bg-black/20" />

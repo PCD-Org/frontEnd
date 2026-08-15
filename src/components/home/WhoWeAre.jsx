@@ -1,6 +1,7 @@
 import { Leaf } from 'lucide-react'; 
 import { motion } from "motion/react";
 import { Container } from '../ui/Container';
+import whoWeAreImg from "../../assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg";
 
 
 export const WhoWeAre = () => {
@@ -78,7 +79,7 @@ export const WhoWeAre = () => {
         >
             <div className="relative group overflow-hidden rounded-3xl shadow-lg transition-all duration-300 hover:shadow-primary/30">
           <img 
-            src="/src/assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg" 
+            src={whoWeAreImg}
             alt="Who We Are - PCED Palestine" 
             className="w-full h-auto object-cover transform transition-transform duration-500 group-hover:scale-105"
           />

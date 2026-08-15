@@ -1,7 +1,9 @@
+import activityImage from "./assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg";
+
 export const activitiesData = [
   {
     id: 1,
-    image: "/src/assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg",
+    image: activityImage,
     category: "ورشات",
     date : "2023-10-15",
     title: "جلسة حوارية حول واقع التعليم والتنمية في غزة",
@@ -9,7 +11,7 @@ export const activitiesData = [
   },
   {
     id: 2,
-    image: "/src/assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg",
+    image: activityImage,
     category: "دعم نفسي",
     date : "2023-10-15",
     title: "جلسات تفريغ نفسي بالتعاون مع مركز شؤون المرأة",
@@ -17,7 +19,7 @@ export const activitiesData = [
   },
   {
     id: 3,
-    image: "/src/assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg",
+    image: activityImage,
     category: "إغاثة",
     date : "2023-10-15",
     title: "الهيئة وصندوق الاستثمار الفلسطيني يوزعون طروداً غذائية",
