@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "motion/react";
 import {
   Archive,
@@ -6,13 +5,15 @@ import {
   UsersRound,
   Mail,
   ArrowLeft,
+  ArrowRight,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "../utils/useTranslation";
 
 const Research = () => {
+  const { t, dir } = useTranslation();
   return (
     <main
-      dir="rtl"
       className="min-h-screen bg-[#FAF9F8] text-[#001809]"
     >
       {/* =====================================================
@@ -87,16 +88,15 @@ const Research = () => {
                 hover:text-[#0F2E1B]
               "
             >
-              الرئيسية
+              {t("research.breadcrumbHome")}
             </Link>
 
             <span className="text-[#9CA3AF]">‹</span>
 
             <span className="text-[#001809]">
-              الأبحاث والدراسات
+              {t("research.breadcrumbCurrent")}
             </span>
           </motion.div>
-
           {/* Hero title */}
           <div className="text-center">
 
@@ -116,7 +116,7 @@ const Research = () => {
                 lg:text-[64px]
               "
             >
-              الأبحاث والدراسات
+              {t("research.heroTitle")}
             </motion.h1>
 
             <motion.p
@@ -138,10 +138,7 @@ const Research = () => {
                 md:text-xl
               "
             >
-              نلتزم في المركز الفلسطيني للتنمية البيئية بتوفير قاعدة
-              بيانات علمية رصينة تدعم جهود الحفاظ على التنوع البيئي
-              والتنمية المستدامة في فلسطين. أبحاثنا تربط بين المعارف
-              التقليدية الموروثة والتقنيات الحديثة.
+              {t("research.heroDesc")}
             </motion.p>
 
           </div>
@@ -227,23 +224,7 @@ const Research = () => {
             <div className="relative">
 
               {/* Title */}
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 20,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                }}
-                transition={{
-                  duration: 0.6,
-                }}
-                className="text-center"
-              >
+              <div className="text-center">
                 <h2
                   className="
                     font-serif
@@ -254,7 +235,7 @@ const Research = () => {
                     md:text-5xl
                   "
                 >
-                  تحديث قاعدة البيانات
+                  {t("research.dbTitle")}
                 </h2>
 
                 <p
@@ -268,12 +249,9 @@ const Research = () => {
                     sm:text-lg
                   "
                 >
-                  نعمل حالياً على تحديث قاعدة بيانات الأبحاث والدراسات
-                  العلمية لتوفير أفضل الموارد المعرفية. سيتم إطلاق
-                  النسخة المحدثة قريباً لتضم تقارير ميدانية، دراسات
-                  أكاديمية، وأوراق سياسات بيئية متخصصة.
+                  {t("research.dbDesc")}
                 </p>
-              </motion.div>
+              </div>
 
               {/* Divider */}
               <div className="my-12 h-px bg-[#E8EBE8]" />
@@ -281,7 +259,7 @@ const Research = () => {
               {/* =================================================
                   FEATURES
               ================================================== */}
-              <div
+              <motion.div
                 className="
                   grid
                   grid-cols-1
@@ -289,53 +267,39 @@ const Research = () => {
                   md:grid-cols-3
                   md:gap-8
                 "
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.6 }}
               >
 
                 {/* Feature 1 */}
                 <ResearchFeature
                   icon={Archive}
-                  title="أرشيف رقمي"
-                  description="سهولة الوصول للمقالات العلمية والمواد البحثية."
-                  delay={0}
+                  title={t("research.feature1.title")}
+                  description={t("research.feature1.desc")}
                 />
 
                 {/* Feature 2 */}
                 <ResearchFeature
                   icon={BarChart3}
-                  title="تحليل البيانات"
-                  description="تقارير إحصائية دقيقة تساعد على فهم البيانات والنتائج."
-                  delay={0.1}
+                  title={t("research.feature2.title")}
+                  description={t("research.feature2.desc")}
                 />
 
                 {/* Feature 3 */}
                 <ResearchFeature
                   icon={UsersRound}
-                  title="تعاون بحثي"
-                  description="منصة للباحثين والمهتمين لتبادل المعرفة والخبرات."
-                  delay={0.2}
+                  title={t("research.feature3.title")}
+                  description={t("research.feature3.desc")}
                 />
 
-              </div>
+              </motion.div>
 
               {/* =================================================
                   NEWSLETTER
               ================================================== */}
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 25,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                }}
-                transition={{
-                  duration: 0.6,
-                  delay: 0.2,
-                }}
+              <div
                 className="
                   mt-16
                   text-center
@@ -351,7 +315,7 @@ const Research = () => {
                     sm:text-lg
                   "
                 >
-                  اشترك لتصلك تنبيهات الإصدارات الجديدة
+                  {t("research.newsletter")}
                 </p>
 
                 <div
@@ -379,7 +343,7 @@ const Research = () => {
                       gap-3
                       px-5
                       py-3.5
-                      text-right
+                      text-start
                     "
                   >
                     <Mail
@@ -389,7 +353,7 @@ const Research = () => {
 
                     <input
                       type="email"
-                      placeholder="البريد الإلكتروني"
+                      placeholder={t("research.emailPlaceholder")}
                       className="
                         w-full
                         bg-transparent
@@ -402,13 +366,7 @@ const Research = () => {
                   </div>
 
                   {/* Subscribe */}
-                  <motion.button
-                    whileHover={{
-                      scale: 1.02,
-                    }}
-                    whileTap={{
-                      scale: 0.97,
-                    }}
+                  <button
                     className="
                       bg-[#0F2E1B]
                       px-7
@@ -416,18 +374,22 @@ const Research = () => {
                       text-sm
                       font-bold
                       text-white
-                      transition-colors
-                      duration-300
+                      transition-all
+                      duration-200
+                      ease-out
+                      hover:-translate-y-0.5
+                      hover:scale-[1.02]
                       hover:bg-[#164325]
+                      active:scale-[0.97]
                       sm:shrink-0
                     "
                   >
-                    اشترك الآن
-                  </motion.button>
+                    {t("research.subscribe")}
+                  </button>
 
                 </div>
 
-              </motion.div>
+              </div>
 
             </div>
           </motion.section>
@@ -446,18 +408,18 @@ const Research = () => {
           >
 
             <SmallResearchCard
-              title="التنوع الحيوي"
-              description="دراسة التنوع الحيوي والموارد الطبيعية في فلسطين."
+              title={t("research.card1.title")}
+              description={t("research.card1.desc")}
             />
 
             <SmallResearchCard
-              title="الأمن الغذائي"
-              description="أبحاث حول استدامة الموارد والأمن الغذائي."
+              title={t("research.card2.title")}
+              description={t("research.card2.desc")}
             />
 
             <SmallResearchCard
-              title="سياسات البيئة"
-              description="تحليل السياسات البيئية ودعم التنمية المستدامة."
+              title={t("research.card3.title")}
+              description={t("research.card3.desc")}
             />
 
           </div>
@@ -465,34 +427,41 @@ const Research = () => {
           {/* Back */}
           <div className="mt-12 flex justify-center">
 
-            <motion.div
-              whileHover={{
-                x: -4,
-              }}
+            <Link
+              to="/"
+              className="
+                group
+                flex
+                items-center
+                gap-3
+                rounded-full
+                bg-[#0F2E1B]
+                px-7
+                py-3.5
+                text-sm
+                font-bold
+                text-white
+                shadow-lg
+                shadow-[#0F2E1B]/10
+                transition-all
+                duration-300
+                hover:bg-[#164325]
+                rtl:hover:translate-x-1
+                ltr:hover:-translate-x-1
+              "
             >
-              <Link
-                to="/"
-                className="
-                  group
-                  flex
-                  items-center
-                  gap-3
-                  rounded-full
-                  bg-[#0F2E1B]
-                  px-7
-                  py-3.5
-                  text-sm
-                  font-bold
-                  text-white
-                  shadow-lg
-                  shadow-[#0F2E1B]/10
-                  transition-all
-                  duration-300
-                  hover:bg-[#164325]
-                "
-              >
-                {/* <span>العودة للرئيسية</span> */}
+              {/* <span>العودة للرئيسية</span> */}
 
+              {dir === "rtl" ? (
+                <ArrowRight
+                  size={18}
+                  className="
+                    transition-transform
+                    duration-300
+                    group-hover:translate-x-1
+                  "
+                />
+              ) : (
                 <ArrowLeft
                   size={18}
                   className="
@@ -501,9 +470,8 @@ const Research = () => {
                     group-hover:-translate-x-1
                   "
                 />
-              </Link>
-            </motion.div>
-
+              )}
+            </Link>
           </div>
 
         </div>
@@ -520,42 +488,18 @@ const ResearchFeature = ({
   icon: Icon,
   title,
   description,
-  delay,
 }) => {
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-        y: 25,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-      }}
-      viewport={{
-        once: true,
-      }}
-      transition={{
-        duration: 0.6,
-        delay,
-      }}
-      whileHover={{
-        y: -5,
-      }}
+    <div
       className="
         group
         text-center
+        transition-all
+        duration-300
+        hover:-translate-y-[5px]
       "
     >
-
-      <motion.div
-        whileHover={{
-          scale: 1.08,
-          rotate: 3,
-        }}
-        transition={{
-          duration: 0.25,
-        }}
+      <div
         className="
           mx-auto
           mb-5
@@ -567,8 +511,10 @@ const ResearchFeature = ({
           rounded-xl
           bg-[#F3E8D8]
           text-[#79552C]
-          transition-colors
+          transition-all
           duration-300
+          group-hover:rotate-3
+          group-hover:scale-110
           group-hover:bg-[#D8F2DC]
           group-hover:text-[#0F2E1B]
         "
@@ -577,7 +523,7 @@ const ResearchFeature = ({
           size={26}
           strokeWidth={1.8}
         />
-      </motion.div>
+      </div>
 
       <h3
         className="
@@ -604,7 +550,7 @@ const ResearchFeature = ({
         {description}
       </p>
 
-    </motion.div>
+    </div>
   );
 };
 
@@ -617,13 +563,7 @@ const SmallResearchCard = ({
   description,
 }) => {
   return (
-    <motion.div
-      whileHover={{
-        y: -5,
-      }}
-      transition={{
-        duration: 0.25,
-      }}
+    <div
       className="
         rounded-2xl
         border
@@ -632,8 +572,9 @@ const SmallResearchCard = ({
         px-6
         py-6
         text-center
-        transition-shadow
+        transition-all
         duration-300
+        hover:-translate-y-[5px]
         hover:shadow-[0_12px_30px_rgba(0,24,9,0.07)]
       "
     >
@@ -658,7 +599,7 @@ const SmallResearchCard = ({
       >
         {description}
       </p>
-    </motion.div>
+    </div>
   );
 };
 

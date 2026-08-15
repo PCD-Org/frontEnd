@@ -1,7 +1,10 @@
 import { Quote } from "lucide-react"
 import { motion } from "motion/react";
+import { useTranslation } from "../../utils/useTranslation";
 
 export const Qoute = () => {
+    const { t } = useTranslation();
+
     return (
         <motion.section className="py-16 px-4 -mt-5 md:px-8 bg-primary-dark  mb-12">
             <motion.div
@@ -12,10 +15,9 @@ export const Qoute = () => {
                 transition={{ duration: 0.5, ease: "easeOut" }}
             >
                 <Quote className="w-10 h-10 text-primary" />
-                <h2 className="text-white font-bold text-3xl">"نلتزم بنشر الوعي البيئي والتصدي للتغير المناخي لخلق
-                    بيئة سليمة للأجيال الحالية والمستقبلية."</h2>
+                <h2 className="text-white font-bold text-3xl text-center">{t("quote.text")}</h2>
 
-                <p className="text-primary ">__________ رؤيتنا للمستقبل __________</p>
+                <p className="text-primary ">{t("quote.label")}</p>
             </motion.div>
 
 

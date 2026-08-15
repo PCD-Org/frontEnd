@@ -2,49 +2,52 @@ import { Globe, Rocket, Users, Accessibility, HandHeart } from 'lucide-react';
 import { motion } from "motion/react";
 import { Container } from "../ui/Container";
 import { GoalCard } from "./GoalCard";
-
-const goalsData = [
-    {
-        id: 1,
-        icon: Globe,
-        name: "تعزيز الوعي البيئي والمناخي",
-        description: "نشر ثقافة الحفاظ على البيئة ومواجهة التحديات المناخية عبر برامج توعوية شاملة تستهدف مختلف فئات المجتمع",
-    },
-    {
-        id: 2,
-        icon: Rocket,
-        name: "تطوير برامج مستدامة",
-        description: "العمل على مبادرات عملية تحسن جودة البيئة وتدعم الاستدامة، بالشراكة مع مؤسسات حكومية وأهلية.",
-    },
-    {
-        id: 3,
-        icon: Users,
-        name: "التنمية المجتمعية",
-        description: "تنفيذ مشاريع تنموية تُراعي الأبعاد البيئية والاقتصادية والاجتماعية لضمان التوازن والعدالة.",
-    },
-    {
-        id: 4,
-        icon: Accessibility,
-        name: "تمكين الشباب",
-        description: "تنمية مهارات الجيل الجديد وتزويده بالإمكانات اللازمة ليكون جزءاً فاعلاً في عمليات التنمية والبناء.",
-    },
-    {
-        id: 5,
-        icon: Globe,
-        name: "التعاون الدولي",
-        description: "إقامة علاقات وشراكات استراتيجية مع منظمات دولية بيئية وتنموية، وتبادل الخبرات العالمية.",
-    },
-    {
-        id: 6,
-        icon: HandHeart,
-        name: "دعم المشاركة المجتمعية",
-        description: "إشراك المجتمع المدني والفئات الهشة في جهود الحماية البيئية لضمان الأثر الإيجابي طويل المدى.",
-    },
-];
+import { useTranslation } from "../../utils/useTranslation";
 
 export const OurGoals = () => {
+    const { t } = useTranslation();
+
+    const goalsData = [
+        {
+            id: 1,
+            icon: Globe,
+            name: t("goals.1.name"),
+            description: t("goals.1.desc"),
+        },
+        {
+            id: 2,
+            icon: Rocket,
+            name: t("goals.2.name"),
+            description: t("goals.2.desc"),
+        },
+        {
+            id: 3,
+            icon: Users,
+            name: t("goals.3.name"),
+            description: t("goals.3.desc"),
+        },
+        {
+            id: 4,
+            icon: Accessibility,
+            name: t("goals.4.name"),
+            description: t("goals.4.desc"),
+        },
+        {
+            id: 5,
+            icon: Globe,
+            name: t("goals.5.name"),
+            description: t("goals.5.desc"),
+        },
+        {
+            id: 6,
+            icon: HandHeart,
+            name: t("goals.6.name"),
+            description: t("goals.6.desc"),
+        },
+    ];
+
     return (
-        <motion.section className="py-16 bg-surface-card mb-12" dir="rtl">
+        <motion.section className="py-16 bg-surface-card mb-12">
             <Container className="flex flex-col gap-12">
 
                 <motion.div
@@ -55,24 +58,32 @@ export const OurGoals = () => {
                     transition={{ duration: 0.5, ease: "easeOut" }}
                 >
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-950">
-                        أهدافنا الاستراتيجية
+                        {t("goals.title")}
                     </h2>
                     <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                        نعمل وفق رؤية واضحة تهدف إلى النهوض بالواقع البيئي والتنموي في المجتمع الفلسطيني عبر محاور عمل متكاملة
+                        {t("goals.subtitle")}
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {goalsData.map((item, index) => (
+                <motion.div
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, amount: 0.15 }}
+                    variants={{
+                      hidden: {},
+                      show: { transition: { staggerChildren: 0.08 } },
+                    }}
+                >
+                    {goalsData.map((item) => (
                         <GoalCard
                             key={item.id}
                             icon={item.icon}
                             name={item.name}
                             description={item.description}
-                            index={index}
                         />
                     ))}
-                </div>
+                </motion.div>
 
             </Container>
         </motion.section>

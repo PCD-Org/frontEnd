@@ -2,23 +2,24 @@ import {PageHeader} from "../components/ui/PageHeader";
 import {SectionTitle} from "../components/ui/SectionTitle";
 import aboutHeroImg from "../assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg";
 import {Container} from "../components/ui/Container";
+import { useTranslation } from "../utils/useTranslation";
+
 function About() {
+  const { t } = useTranslation();
   return (
 <>
   <SectionTitle 
-  title="الرئيسية" 
-  breadcrumbs={[{ label: 'من نحن' }]}
+  title={t("about.sectionTitle")} 
+  breadcrumbs={[{ label: t("about.breadcrumb") }]}
   align="right"
 />
  <Container>
   <PageHeader 
   variant="light"
-  title={ <> جذورنا في التميز <br /> الأكاديمي </> }
-  description="نحن مؤسسة رائدة تكرس جهودها لتعزيز التنمية البيئية في فلسطين من خلال البحث
-العلمي المتخصص والعمل الميداني الملتزم بمعايير الاستدامة العالمية."
-  breadcrumbs={[{ label: 'من نحن' }]}
+  title={ <> {t("about.heroTitle1")} <br /> {t("about.heroTitle2")} </> }
+  description={t("about.heroDesc")}
   image={aboutHeroImg}
-  imageBadge="تأسيس المركز 2023"
+  imageBadge={t("about.imageBadge")}
 />
 </Container>
 </>

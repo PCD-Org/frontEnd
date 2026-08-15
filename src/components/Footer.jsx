@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "../utils/useTranslation";
 
 function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="w-full bg-[#002417] text-white">
       <div className="mx-auto w-full max-w-[1280px] px-6 py-16 sm:px-8 lg:px-20 lg:py-20">
@@ -12,7 +15,7 @@ function Footer() {
             gap-12
             text-center
             sm:grid-cols-2
-            sm:text-right
+            sm:text-start
             lg:grid-cols-4
             lg:gap-10
           "
@@ -37,7 +40,6 @@ function Footer() {
             </Link>
 
             <p
-              dir="rtl"
               className="
                 max-w-[280px]
                 font-['Atkinson_Hyperlegible_Next']
@@ -46,7 +48,7 @@ function Footer() {
                 text-[#76977E]
               "
             >
-              الهيئة الأهلية الفلسطينية للبيئة والتنمية والتطوير (PCED)
+              {t("footer.about")}
             </p>
 
             {/* Social / Contact Icons */}
@@ -147,7 +149,7 @@ function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div dir="rtl">
+          <div>
             <h3
               className="
                 mb-5
@@ -157,7 +159,7 @@ function Footer() {
                 text-[#F8F9F8]
               "
             >
-              روابط سريعة
+              {t("footer.quickLinks")}
             </h3>
 
             <nav className="flex flex-col gap-3">
@@ -169,11 +171,10 @@ function Footer() {
                   text-[#76977E]
                   transition-all
                   duration-300
-                  hover:translate-x-[-3px]
                   hover:text-white
                 "
               >
-                من نحن
+                {t("footer.link.about")}
               </Link>
 
               <Link
@@ -184,11 +185,10 @@ function Footer() {
                   text-[#76977E]
                   transition-all
                   duration-300
-                  hover:translate-x-[-3px]
                   hover:text-white
                 "
               >
-                مشاريعنا
+                {t("footer.link.projects")}
               </Link>
 
               <Link
@@ -199,11 +199,10 @@ function Footer() {
                   text-[#76977E]
                   transition-all
                   duration-300
-                  hover:translate-x-[-3px]
                   hover:text-white
                 "
               >
-                الأبحاث والدراسات
+                {t("footer.link.research")}
               </Link>
 
               <Link
@@ -214,17 +213,16 @@ function Footer() {
                   text-[#76977E]
                   transition-all
                   duration-300
-                  hover:translate-x-[-3px]
                   hover:text-white
                 "
               >
-                اتصل بنا
+                {t("footer.link.contact")}
               </Link>
             </nav>
           </div>
 
           {/* Programs */}
-          <div dir="rtl">
+          <div>
             <h3
               className="
                 mb-5
@@ -234,7 +232,7 @@ function Footer() {
                 text-[#F8F9F8]
               "
             >
-              البرامج
+              {t("footer.programs")}
             </h3>
 
             <nav className="flex flex-col gap-3">
@@ -246,11 +244,10 @@ function Footer() {
                   text-[#76977E]
                   transition-all
                   duration-300
-                  hover:translate-x-[-3px]
                   hover:text-white
                 "
               >
-                توعية بيئية
+                {t("footer.program.env")}
               </Link>
 
               <Link
@@ -261,11 +258,10 @@ function Footer() {
                   text-[#76977E]
                   transition-all
                   duration-300
-                  hover:translate-x-[-3px]
                   hover:text-white
                 "
               >
-                دعم مجتمعي
+                {t("footer.program.community")}
               </Link>
 
               <Link
@@ -276,11 +272,10 @@ function Footer() {
                   text-[#76977E]
                   transition-all
                   duration-300
-                  hover:translate-x-[-3px]
                   hover:text-white
                 "
               >
-                تمكين الشباب
+                {t("footer.program.youth")}
               </Link>
 
               <Link
@@ -291,17 +286,16 @@ function Footer() {
                   text-[#76977E]
                   transition-all
                   duration-300
-                  hover:translate-x-[-3px]
                   hover:text-white
                 "
               >
-                مشاريع إغاثية
+                {t("footer.program.relief")}
               </Link>
             </nav>
           </div>
 
           {/* Contact */}
-          <div dir="rtl">
+          <div>
             <h3
               className="
                 mb-5
@@ -311,7 +305,7 @@ function Footer() {
                 text-[#F8F9F8]
               "
             >
-              تواصل معنا
+              {t("footer.contact")}
             </h3>
 
             <div className="flex flex-col gap-4">
@@ -397,7 +391,7 @@ function Footer() {
                   sm:justify-start
                 "
               >
-                <span>Palestine - Gaza - Alremal</span>
+                <span>{t("footer.location")}</span>
 
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -431,8 +425,7 @@ function Footer() {
             text-[#76977E]
           "
         >
-          © 2024 Palestinian Organization for Environment & Development.
-          All rights reserved.
+          {t("footer.copyright")}
         </div>
       </div>
     </footer>

@@ -1,14 +1,16 @@
+import { useTranslation } from "../../utils/useTranslation";
+
 export const SectionTitle = ({
-  title,
   subtitle,
   breadcrumbs = [],
   align = 'right', // 'right' | 'center' | 'left'
   className = '',
 }) => {
+  const { t } = useTranslation();
   const alignmentClasses = {
-    right: 'text-right items-start',
+    right: 'text-start items-start',
     center: 'text-center items-center',
-    left: 'text-left items-end',
+    left: 'text-end items-end',
   };
 
   return (
@@ -18,7 +20,7 @@ export const SectionTitle = ({
           <ol className="flex items-center gap-6 text-sm text-gray-500">
             <li>
               <a href="/" className="hover:text-emerald-700 transition-colors">
-                الرئيسية
+                {t("breadcrumb.home")}
               </a>
             </li>
             {breadcrumbs.map((item, index) => (

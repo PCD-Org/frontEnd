@@ -1,16 +1,17 @@
 import {PageHeader} from "../components/ui/PageHeader";
+import { useTranslation } from "../utils/useTranslation";
 
 
 export default function News() {
+  const { t } = useTranslation();
   return (
     // <div>News Page</div>
     <>
     
     <PageHeader 
   variant="light"
-  title="الأبحاث والدراسات"
-  description="نلتزم في المركز الفلسطيني للتنمية البيئية بتوفير قاعدة بيانات علمية رصينة..."
-  breadcrumbs={[{ label: 'الأبحاث والدراسات' }]}
+  title={t("news.title")}
+  description={t("news.desc")}
 /></>
   )
 }

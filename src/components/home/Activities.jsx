@@ -3,12 +3,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import ActivityCard from "../ActivityCard";
 import CategoryFilter from "../CategoryFilter";
 import { categories, activitiesData } from "../../activitiesData";
+import { useTranslation } from "../../utils/useTranslation";
 
 
 const Activities = () => {
-  const [activeCategory, setActiveCategory] = useState("الكل");
+  const { t } = useTranslation();
+  const [activeCategory, setActiveCategory] = useState("all");
 
-  const filteredActivities = activeCategory === "الكل"
+  const filteredActivities = activeCategory === "all"
     ? activitiesData
     : activitiesData.filter(activity => activity.category === activeCategory);
 
@@ -28,12 +30,12 @@ const Activities = () => {
           variant="container"
         />
         
-        <div className="text-right flex-1">
+        <div className="text-start flex-1">
           <h2 className="text-[40px] font-bold text-[#0D3B2E] leading-tight">
-            آخر الأنشطة والمشاريع
+            {t("homeActivities.title")}
           </h2>
           <p className="text-gray-600 mt-2 text-lg">
-            مشاريعنا الحالية وجهودنا المستمرة في الميدان
+            {t("homeActivities.subtitle")}
           </p>
         </div>
       </motion.div>
@@ -57,8 +59,8 @@ const Activities = () => {
                 <ActivityCard
                   image={item.image}
                   category={item.category}
-                  title={item.title}
-                  description={item.description}
+                  title={t(item.titleKey)}
+                  description={t(item.descriptionKey)}
                 />
               </motion.div>
             ))
@@ -69,27 +71,19 @@ const Activities = () => {
               exit={{ opacity: 0 }}
               className="col-span-full text-center py-12 text-gray-500 text-lg"
             >
-              لا توجد أنشطة حالية في فئة "{categories.find(c => c.slug === activeCategory)?.name}".
+              {t("homeActivities.empty")} "{t(categories.find(c => c.slug === activeCategory)?.nameKey)}".
             </motion.div>
           )}
         </AnimatePresence>
       </motion.div>
 
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="flex justify-center mt-20"
-      >
-        <motion.button 
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.96 }}
-          className="border-2 border-[#0D3B2E] text-[#0D3B2E] px-12 py-3 rounded-full font-semibold hover:bg-[#0D3B2E] hover:text-white transition duration-300 shadow-sm"
+      <div className="flex justify-center mt-20">
+        <button 
+          className="border-2 border-[#0D3B2E] text-[#0D3B2E] px-12 py-3 rounded-full font-semibold hover:bg-[#0D3B2E] hover:text-white transition-all duration-300 shadow-sm hover:scale-[1.04] active:scale-95"
         >
-          مشاهدة كافة الأنشطة
-        </motion.button>
-      </motion.div>
+          {t("homeActivities.viewAll")}
+        </button>
+      </div>
     </section>
   );
 };

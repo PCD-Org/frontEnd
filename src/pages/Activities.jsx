@@ -1,20 +1,16 @@
-
-// export default function Activities() {
-//   return (
-//     <div>Activities Page</div>
-//   )
-// }
 import { useState } from 'react';
 import { PageHeader } from '../components/ui/PageHeader';
 import CategoryFilter from '../components/CategoryFilter';
 import ActivityCard from '../components/ActivityCard';
 import { categories, activitiesData } from '../activitiesData';
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from '../utils/useTranslation';
 
 
 export default function Activities() {
-  const [activeCategory, setActiveCategory] = useState("الكل");
-  const filteredActivities = activeCategory === "الكل"
+  const { t } = useTranslation();
+  const [activeCategory, setActiveCategory] = useState("all");
+  const filteredActivities = activeCategory === "all"
     ? activitiesData
     : activitiesData.filter(activity => activity.category === activeCategory);
 
@@ -22,9 +18,8 @@ export default function Activities() {
     <div>
       <PageHeader 
         variant="dark"
-        title="برامج الدعم والمساندة"
-        description="نحن في المركز الفلسطيني للتنمية البيئية نؤمن بأن الصمود يبدأ من تمكين المجتمع. تشمل برامجنا التدخلات العاجلة والمستدامة لتعزيز قدرة شعبنا على مواجهة التحديات البيئية والاجتماعية من خلال التنمية المدروسة والدعم المباشر."
-        breadcrumbs={[{ label: 'الأنشطة' }]}
+        title={t("activitiesPage.title")}
+        description={t("activitiesPage.desc")}
       />
 
       <div className="max-w-7xl mx-auto px-5 py-12 ">
@@ -54,9 +49,9 @@ export default function Activities() {
                   <ActivityCard
                     image={item.image}
                     category={item.category}
-                    title={item.title}
+                    title={t(item.titleKey)}
                     date={item.date}
-                    description={item.description}
+                    description={t(item.descriptionKey)}
                   />
                 </motion.div>
               ))
@@ -67,7 +62,7 @@ export default function Activities() {
                 exit={{ opacity: 0 }}
                 className="col-span-full text-center py-12 text-gray-500 text-lg"
               >
-                لا توجد أنشطة حالية في فئة "{categories.find(c => c.slug === activeCategory)?.name}".
+                {t("homeActivities.empty")} "{t(categories.find(c => c.slug === activeCategory)?.nameKey)}".
               </motion.div>
             )}
           </AnimatePresence>

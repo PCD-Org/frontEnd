@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "../utils/useTranslation";
 
 const CategoryFilter = ({ 
   categories, 
@@ -6,11 +7,12 @@ const CategoryFilter = ({
   onSelectCategory, 
   variant = "pills" 
 }) => {
+  const { t } = useTranslation();
   const isPills = variant === "pills";
 
   return (
     <div
-      className={`flex items-center dir-rtl overflow-x-auto ${isPills ? "border-b border-gray-100 pb-5 mb-8" : ""} ${
+      className={`flex items-center overflow-x-auto ${isPills ? "border-b border-gray-100 pb-5 mb-8" : ""} ${
         isPills
           ? "gap-3  justify-start " 
           : "bg-[#F4F5F0] p-1.5 rounded-full gap-1" 
@@ -37,7 +39,7 @@ const CategoryFilter = ({
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
               />
             )}
-            {cat.name}
+            {t(cat.nameKey)}
           </button>
         );
       })}

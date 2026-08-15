@@ -17,7 +17,7 @@ export const PageHeader = ({
         <div className={`flex flex-col gap-4 ${
           image 
             ? 'w-full md:w-1/2' 
-            : 'w-full max-w-3xl text-right' 
+            : 'w-full max-w-3xl text-start' 
         }`}>
           {/* Title */}
           <h1 className={`text-4xl md:text-5xl font-black leading-tight ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -42,7 +42,7 @@ export const PageHeader = ({
               </div>
 
               {imageBadge && (
-                <div className="absolute -bottom-4 right-0 transform translate-x-1/4 bg-[#fcd39d] text-[#6b3d16] px-4 py-3.5 rounded-2xl text-center shadow-md font-bold flex flex-col items-center justify-center leading-tight z-10">
+                <div className="absolute -bottom-4 rtl:right-0 ltr:left-0 rtl:translate-x-1/4 ltr:-translate-x-1/4 bg-[#fcd39d] text-[#6b3d16] px-4 py-3.5 rounded-2xl text-center shadow-md font-bold flex flex-col items-center justify-center leading-tight z-10">
                   <span>{typeof imageBadge === 'object' ? imageBadge.year : '2023'}</span>
                   <span className="text-[11px] font-normal opacity-90 mt-0.5">
                     {typeof imageBadge === 'object' 

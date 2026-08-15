@@ -2,29 +2,15 @@ import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import {Search,Globe,ChevronDown,Menu,X,} from "lucide-react";
+import { useTranslation } from "../utils/useTranslation";
+import useLanguageStore from "../store/useLanguageStore";
 
-const navItems = [
-    {
-    label: "الرئيسية",
-    path: "/",
-  },
-  {
-    label: "من نحن",
-    path: "/about",
-  },
-  
-  {
-    label: "الأنشطة",
-    path: "/activities",
-  },
-  {
-    label: "الأبحاث والدراسات",
-    path: "/research",
-  },
-  {
-    label: "الأخبار",
-    path: "/news",
-  },
+const navKeys = [
+  { key: "nav.home", path: "/" },
+  { key: "nav.about", path: "/about" },
+  { key: "nav.activities", path: "/activities" },
+  { key: "nav.research", path: "/research" },
+  { key: "nav.news", path: "/news" },
 ];
 
 export default function Header() {
@@ -33,9 +19,17 @@ export default function Header() {
   const [isMobileLanguageOpen, setIsMobileLanguageOpen] =
     useState(false);
 
+  const { t, language } = useTranslation();
+  const setLanguage = useLanguageStore((state) => state.setLanguage);
+
+  const handleLanguageChange = (lang) => {
+    setLanguage(lang);
+    setIsLanguageOpen(false);
+    setIsMobileLanguageOpen(false);
+  };
+
   return (
     <header
-      dir="rtl"
       className="
         fixed
         left-0
@@ -121,7 +115,7 @@ export default function Header() {
 
           <nav className="hidden lg:block">
             <div className="flex items-center gap-6 xl:gap-10">
-              {navItems.map((item) => (
+              {navKeys.map((item) => (
                 <NavLink
                   key={item.path}
                   to={item.path}
@@ -144,16 +138,12 @@ export default function Header() {
                     <>
                       {/* Text */}
 
-                      <motion.span
-                        whileHover={{
-                          y: -1,
-                        }}
-                        transition={{
-                          duration: 0.2,
-                        }}
+                      <span
                         className={`
-                          transition-colors
+                          transition-all
                           duration-300
+                          ease-out
+                          group-hover:-translate-y-[1px]
                           ${
                             isActive
                               ? "text-[#001809]"
@@ -161,13 +151,13 @@ export default function Header() {
                           }
                         `}
                       >
-                        {item.label}
-                      </motion.span>
+                        {t(item.key)}
+                      </span>
 
                       {/* Underline */}
 
-                      <motion.span
-                        className="
+                      <span
+                        className={`
                           absolute
                           bottom-0
                           left-0
@@ -175,20 +165,15 @@ export default function Header() {
                           h-[2px]
                           origin-center
                           bg-[#001809]
-                        "
-                        initial={false}
-                        animate={{
-                          scaleX: isActive ? 1 : 0,
-                          opacity: isActive ? 1 : 0,
-                        }}
-                        whileHover={{
-                          scaleX: 1,
-                          opacity: 1,
-                        }}
-                        transition={{
-                          duration: 0.25,
-                          ease: "easeOut",
-                        }}
+                          transition-transform
+                          duration-300
+                          ease-out
+                          ${
+                            isActive
+                              ? "scale-x-100 opacity-100"
+                              : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
+                          }
+                        `}
                       />
                     </>
                   )}
@@ -216,20 +201,8 @@ export default function Header() {
               DONATE BUTTON
           ====================================================== */}
 
-          <motion.button
+          <button
             type="button"
-            whileHover={{
-              scale: 1.04,
-              y: -2,
-            }}
-            whileTap={{
-              scale: 0.96,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 17,
-            }}
             className="
               group
               relative
@@ -249,9 +222,13 @@ export default function Header() {
               leading-[26px]
               tracking-[-0.4px]
               text-[#76977E]
-              transition-shadow
-              duration-300
+              transition-all
+              duration-200
+              ease-out
+              hover:-translate-y-0.5
+              hover:scale-[1.04]
               hover:shadow-[0_8px_20px_rgba(15,46,27,0.20)]
+              active:scale-95
             "
           >
             {/* Shine Effect */}
@@ -273,9 +250,9 @@ export default function Header() {
             />
 
             <span className="relative z-10">
-              تبرع الآن
+              {t("header.donate")}
             </span>
-          </motion.button>
+          </button>
 
           {/* =====================================================
               DESKTOP SEARCH
@@ -304,13 +281,12 @@ export default function Header() {
           >
             <input
               type="text"
-              placeholder="بحث..."
+              placeholder={t("header.search")}
               className="
                 min-w-0
                 flex-1
                 bg-transparent
                 px-1
-                text-right
                 font-['Atkinson_Hyperlegible_Next']
                 text-[14px]
                 font-bold
@@ -326,13 +302,14 @@ export default function Header() {
               size={18}
               strokeWidth={2}
               className="
-                mr-2
                 shrink-0
                 text-[#727972]
                 transition-all
                 duration-300
                 group-focus-within:scale-110
                 group-focus-within:text-[#0F2E1B]
+                ltr:ml-2
+                rtl:mr-2
               "
             />
           </div>
@@ -342,14 +319,8 @@ export default function Header() {
           ====================================================== */}
 
           <div className="relative hidden lg:block">
-            <motion.button
+            <button
               type="button"
-              whileHover={{
-                y: -1,
-              }}
-              whileTap={{
-                scale: 0.97,
-              }}
               onClick={() =>
                 setIsLanguageOpen((prev) => !prev)
               }
@@ -367,13 +338,16 @@ export default function Header() {
                 leading-[26px]
                 tracking-[-0.4px]
                 text-[#424842]
-                transition-colors
+                transition-all
                 duration-200
+                ease-out
+                hover:-translate-y-[1px]
                 hover:bg-black/5
                 hover:text-[#001809]
+                active:scale-95
               "
             >
-              <span>العربية</span>
+              <span>{t("header.currentLang")}</span>
 
               <Globe
                 size={16.67}
@@ -397,7 +371,7 @@ export default function Header() {
                   }
                 `}
               />
-            </motion.button>
+            </button>
 
             {/* Desktop Language Dropdown */}
 
@@ -425,56 +399,66 @@ export default function Header() {
                   }}
                   className="
                     absolute
-                    left-0
                     top-[40px]
                     min-w-[120px]
-                    origin-top-left
                     overflow-hidden
                     rounded-xl
                     border
                     border-[#C2C8C0]/30
                     bg-[#FAF9F8]
                     shadow-[0_10px_30px_rgba(0,0,0,0.10)]
+                    ltr:left-0
+                    ltr:origin-top-left
+                    rtl:right-0
+                    rtl:origin-top-right
                   "
                 >
                   <button
                     type="button"
-                    className="
+                    onClick={() => handleLanguageChange("ar")}
+                    className={`
                       block
                       w-full
                       px-4
                       py-2.5
-                      text-right
+                      text-start
                       font-['FreeSerif']
                       text-sm
-                      text-[#424842]
                       transition-all
                       duration-200
                       hover:bg-[#F4F3F2]
-                      hover:pr-5
                       hover:text-[#001809]
-                    "
+                      ${
+                        language === "ar"
+                          ? "text-[#001809] font-bold"
+                          : "text-[#424842]"
+                      }
+                    `}
                   >
                     العربية
                   </button>
 
                   <button
                     type="button"
-                    className="
+                    onClick={() => handleLanguageChange("en")}
+                    className={`
                       block
                       w-full
                       px-4
                       py-2.5
-                      text-right
+                      text-start
                       font-['FreeSerif']
                       text-sm
-                      text-[#424842]
                       transition-all
                       duration-200
                       hover:bg-[#F4F3F2]
-                      hover:pr-5
                       hover:text-[#001809]
-                    "
+                      ${
+                        language === "en"
+                          ? "text-[#001809] font-bold"
+                          : "text-[#424842]"
+                      }
+                    `}
                   >
                     English
                   </button>
@@ -487,11 +471,8 @@ export default function Header() {
               MOBILE MENU BUTTON
           ====================================================== */}
 
-          <motion.button
+          <button
             type="button"
-            whileTap={{
-              scale: 0.88,
-            }}
             onClick={() =>
               setIsMenuOpen((prev) => !prev)
             }
@@ -506,56 +487,44 @@ export default function Header() {
               transition-colors
               duration-200
               hover:bg-[#F4F3F2]
+              active:scale-90
               lg:hidden
             "
-            aria-label="فتح القائمة"
+            aria-label={t("header.openMenu")}
           >
-            <AnimatePresence mode="wait">
-              {isMenuOpen ? (
-                <motion.div
-                  key="close"
-                  initial={{
-                    rotate: -90,
-                    opacity: 0,
-                  }}
-                  animate={{
-                    rotate: 0,
-                    opacity: 1,
-                  }}
-                  exit={{
-                    rotate: 90,
-                    opacity: 0,
-                  }}
-                  transition={{
-                    duration: 0.2,
-                  }}
-                >
-                  <X size={24} />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="menu"
-                  initial={{
-                    rotate: 90,
-                    opacity: 0,
-                  }}
-                  animate={{
-                    rotate: 0,
-                    opacity: 1,
-                  }}
-                  exit={{
-                    rotate: -90,
-                    opacity: 0,
-                  }}
-                  transition={{
-                    duration: 0.2,
-                  }}
-                >
-                  <Menu size={24} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.button>
+            <span className="relative block h-6 w-6">
+              <Menu
+                size={24}
+                className={`
+                  absolute
+                  inset-0
+                  transition-all
+                  duration-200
+                  ease-out
+                  ${
+                    isMenuOpen
+                      ? "rotate-90 scale-50 opacity-0"
+                      : "rotate-0 scale-100 opacity-100"
+                  }
+                `}
+              />
+              <X
+                size={24}
+                className={`
+                  absolute
+                  inset-0
+                  transition-all
+                  duration-200
+                  ease-out
+                  ${
+                    isMenuOpen
+                      ? "rotate-0 scale-100 opacity-100"
+                      : "-rotate-90 scale-50 opacity-0"
+                  }
+                `}
+              />
+            </span>
+          </button>
         </div>
       </div>
 
@@ -608,22 +577,8 @@ export default function Header() {
                   MOBILE NAV LINKS
               ========================== */}
 
-              {navItems.map((item, index) => (
-                <motion.div
-                  key={item.path}
-                  initial={{
-                    opacity: 0,
-                    x: 20,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                  }}
-                  transition={{
-                    delay: index * 0.05,
-                    duration: 0.25,
-                  }}
-                >
+              {navKeys.map((item) => (
+                <div key={item.path}>
                   <NavLink
                     to={item.path}
                     onClick={() => {
@@ -644,13 +599,12 @@ export default function Header() {
                       text-[#424842]
                       transition-all
                       duration-300
-                      hover:pr-2
                       hover:text-[#001809]
                     "
                   >
                     {({ isActive }) => (
                       <>
-                        <span>{item.label}</span>
+                        <span>{t(item.key)}</span>
 
                         {/* Mobile Underline */}
 
@@ -658,11 +612,12 @@ export default function Header() {
                           className={`
                             absolute
                             bottom-0
-                            right-0
                             h-[2px]
                             bg-[#001809]
                             transition-all
                             duration-300
+                            rtl:right-0
+                            ltr:left-0
                             ${
                               isActive
                                 ? "w-10 opacity-100"
@@ -673,26 +628,14 @@ export default function Header() {
                       </>
                     )}
                   </NavLink>
-                </motion.div>
+                </div>
               ))}
 
               {/* =================================================
                   MOBILE SEARCH
               ================================================== */}
 
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 10,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  delay: 0.2,
-                  duration: 0.3,
-                }}
+              <div
                 className="
                   mt-4
                   flex
@@ -707,12 +650,11 @@ export default function Header() {
               >
                 <input
                   type="text"
-                  placeholder="بحث..."
+                  placeholder={t("header.search")}
                   className="
                     min-w-0
                     flex-1
                     bg-transparent
-                    text-right
                     font-['Atkinson_Hyperlegible_Next']
                     text-sm
                     outline-none
@@ -721,27 +663,15 @@ export default function Header() {
 
                 <Search
                   size={18}
-                  className="mr-2 text-[#727972]"
+                  className="text-[#727972] ltr:ml-2 rtl:mr-2"
                 />
-              </motion.div>
+              </div>
 
               {/* =================================================
                   MOBILE LANGUAGE
               ================================================== */}
 
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 10,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  delay: 0.25,
-                  duration: 0.3,
-                }}
+              <div
                 className="
                   mt-3
                   border-b
@@ -785,12 +715,12 @@ export default function Header() {
                       "
                     />
 
-                    <span>اللغة</span>
+                    <span>{t("header.language")}</span>
                   </span>
 
                   <span className="flex items-center gap-2">
                     <span className="text-[14px] font-normal text-[#6B7280]">
-                      العربية
+                      {t("header.currentLang")}
                     </span>
 
                     <ChevronDown
@@ -830,78 +760,69 @@ export default function Header() {
                       }}
                       className="overflow-hidden"
                     >
-                      <div className="pb-2 pr-3">
-                        <motion.button
+                      <div className="pb-2 rtl:pr-3 ltr:pl-3">
+                        <button
                           type="button"
-                          whileTap={{
-                            scale: 0.98,
-                          }}
-                          className="
+                          onClick={() => handleLanguageChange("ar")}
+                          className={`
                             flex
                             min-h-[42px]
                             w-full
                             items-center
                             rounded-lg
                             px-3
-                            text-right
                             font-['FreeSerif']
                             text-[16px]
-                            text-[#001809]
                             transition-colors
                             duration-200
                             hover:bg-[#F4F3F2]
-                          "
+                            active:scale-[0.98]
+                            ${
+                              language === "ar"
+                                ? "text-[#001809] font-bold"
+                                : "text-[#424842]"
+                            }
+                          `}
                         >
                           العربية
-                        </motion.button>
+                        </button>
 
-                        <motion.button
+                        <button
                           type="button"
-                          whileTap={{
-                            scale: 0.98,
-                          }}
-                          className="
+                          onClick={() => handleLanguageChange("en")}
+                          className={`
                             flex
                             min-h-[42px]
                             w-full
                             items-center
                             rounded-lg
                             px-3
-                            text-right
                             font-['FreeSerif']
                             text-[16px]
-                            text-[#424842]
                             transition-colors
                             duration-200
                             hover:bg-[#F4F3F2]
-                            hover:text-[#001809]
-                          "
+                            active:scale-[0.98]
+                            ${
+                              language === "en"
+                                ? "text-[#001809] font-bold"
+                                : "text-[#424842] hover:text-[#001809]"
+                            }
+                          `}
                         >
                           English
-                        </motion.button>
+                        </button>
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </motion.div>
+              </div>
 
               {/* =================================================
                   MOBILE ACTIONS
               ================================================== */}
 
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 10,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  delay: 0.3,
-                  duration: 0.3,
-                }}
+              <div
                 className="
                   flex
                   items-center
@@ -911,13 +832,7 @@ export default function Header() {
               >
                 {/* Mobile Donate */}
 
-                <motion.button
-                  whileHover={{
-                    y: -2,
-                  }}
-                  whileTap={{
-                    scale: 0.96,
-                  }}
+                <button
                   className="
                     flex
                     flex-1
@@ -931,14 +846,17 @@ export default function Header() {
                     text-[16px]
                     font-bold
                     text-[#76977E]
-                    transition-shadow
-                    duration-300
+                    transition-all
+                    duration-200
+                    ease-out
+                    hover:-translate-y-0.5
                     hover:shadow-[0_8px_20px_rgba(15,46,27,0.20)]
+                    active:scale-95
                   "
                 >
-                  تبرع الآن
-                </motion.button>
-              </motion.div>
+                  {t("header.donate")}
+                </button>
+              </div>
             </nav>
           </motion.div>
         )}
