@@ -11,6 +11,15 @@ import { RootLayout } from "./components/layout/RootLayout";
 import Research from "./pages/Research";
 import News from "./pages/News";
 import useLanguageStore from "./store/useLanguageStore";
+import AdminLayout from "./components/layout/AdminLayout";
+import ProtectedRoute from "./features/auth/ProtectedRoute";
+import LoginPage from "./pages/LoginPage";
+import DashboardPage from "./pages/DashboardPage";
+import MediaPage from "./pages/MediaPage";
+import NewsPage from "./pages/NewsPage";
+import ActivitiesPage from "./pages/ActivitiesPage";
+import ResearchPage from "./pages/ResearchPage";
+import SettingsPage from "./pages/SettingsPage";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +45,24 @@ function App() {
             <Route path="/activities" element={<Activities />} />
             <Route path="/research" element={<Research />} />
             <Route path="/news" element={<News />} />
+          </Route>
+
+          <Route path="/admin/login" element={<LoginPage />} />
+
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<DashboardPage />} />
+            <Route path="media" element={<MediaPage />} />
+            <Route path="news" element={<NewsPage />} />
+            <Route path="activities" element={<ActivitiesPage />} />
+            <Route path="research" element={<ResearchPage />} />
+            <Route path="settings" element={<SettingsPage />} />
           </Route>
         </Routes>
 
