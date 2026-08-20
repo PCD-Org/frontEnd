@@ -3,7 +3,7 @@ import { API_MODE } from "../utils/api";
 import { withDelay } from "../utils/mock";
 import { newsStore } from "../features/news/mockNews";
 
-const endpoint = "/api/news";
+const endpoint = "/news";
 
 const isMock = () => API_MODE === "mock";
 

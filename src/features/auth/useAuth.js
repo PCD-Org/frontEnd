@@ -8,6 +8,8 @@ export function useAuth() {
   const login = useAuthStore((state) => state.login);
   const logout = useAuthStore((state) => state.logout);
 
+  const checkAuth = useAuthStore((state) => state.checkAuth);
+
   const can = (permission) => hasPermission(user?.role, permission);
 
   return {
@@ -16,6 +18,7 @@ export function useAuth() {
     status,
     login,
     logout,
+    checkAuth,
     can,
     role: user?.role ?? null,
     permissions: getPermissionsForRole(user?.role),

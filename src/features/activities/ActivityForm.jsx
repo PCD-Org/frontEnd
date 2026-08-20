@@ -119,6 +119,21 @@ export default function ActivityForm({
           className="w-full rounded-lg border border-[#D7DDD7] bg-white px-3 py-2 text-sm text-[#001809] outline-none transition-colors focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/40"
         />
       </div>
+      <div className="flex flex-col gap-1.5 text-start">
+        <label htmlFor="activity-cover" className="text-sm font-semibold text-[#001809]">
+          {t("admin.activities.coverImage") || "Cover Image"}
+        </label>
+        <input
+          id="activity-cover"
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            setValues((v) => ({ ...v, coverImage: file || null }));
+          }}
+          className="w-full rounded-lg border border-[#D7DDD7] bg-white px-3 py-2 text-sm text-[#001809] file:mr-3 file:rounded-md file:border-0 file:bg-mint file:px-3 file:py-1 file:text-xs file:font-semibold file:text-primary hover:file:bg-primary hover:file:text-white"
+        />
+      </div>
       <div className="flex justify-end gap-2 border-t border-[#EDF0ED] pt-4">
         <Button variant="secondary" onClick={onCancel}>
           {t("common.cancel")}

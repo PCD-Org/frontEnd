@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Activities from "./pages/Activities";
+import ActivityDetailsPage from "./pages/ActivityDetailsPage";
 import { RootLayout } from "./components/layout/RootLayout";
 import Research from "./pages/Research";
 import News from "./pages/News";
@@ -43,6 +44,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/activities" element={<Activities />} />
+            <Route path="/activities/:id" element={<ActivityDetailsPage />} />
             <Route path="/research" element={<Research />} />
             <Route path="/news" element={<News />} />
           </Route>

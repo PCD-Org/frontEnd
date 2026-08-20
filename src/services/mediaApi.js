@@ -3,7 +3,7 @@ import { API_MODE } from "../utils/api";
 import { withDelay } from "../utils/mock";
 import { mediaStore, createMockMediaItem } from "../features/media/mockMedia";
 
-const endpoint = "/api/media";
+const endpoint = "/media";
 
 const isMock = () => API_MODE === "mock";
 

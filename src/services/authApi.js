@@ -1,8 +1,7 @@
 import api from "../utils/api";
 
 export const authApi = {
-  login: (credentials) => api.post("/api/auth/login", credentials),
-  logout: () => api.post("/api/auth/logout"),
-  me: () => api.get("/api/auth/me"),
-  refresh: (refreshToken) => api.post("/api/auth/refresh", { refreshToken }),
+  login: (credentials) => api.post("/auth/login", credentials),
+  me: () => api.get("/auth/me"),
+  logout: () => api.post("/auth/logout"),
 };

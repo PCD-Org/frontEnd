@@ -1,6 +1,5 @@
 import { API_MODE } from "../utils/api";
 import { authApi } from "./authApi";
-import { tokenStore } from "../utils/tokenStore";
 
 const SESSION_KEY = "pced.admin.session";
 
@@ -27,10 +26,8 @@ const createMockSession = (email) => ({
     id: "demo-admin",
     name: "Admin",
     email,
-    role: "admin",
+    role: "superadmin",
   },
-  accessToken: "mock-access-token",
-  refreshToken: "mock-refresh-token",
   issuedAt: new Date().toISOString(),
 });
 
@@ -43,18 +40,13 @@ export const authService = {
       return session;
     }
     const { data } = await authApi.login({ email, password });
-    currentUser = data.user ?? null;
-    tokenStore.setTokens({
-      access: data.accessToken,
-      refresh: data.refreshToken,
-    });
+    currentUser = data.data?.user ?? data.user ?? data.data ?? data;
     return data;
   },
 
   async logout() {
     currentUser = null;
     clearSession();
-    tokenStore.clear();
     if (!isMock()) {
       try {
         await authApi.logout();
@@ -71,10 +63,10 @@ export const authService = {
     if (currentUser) return currentUser;
     try {
       const { data } = await authApi.me();
-      currentUser = data.user ?? data;
+      currentUser = data.data?.user ?? data.user ?? data.data ?? data;
       return currentUser;
     } catch {
-      tokenStore.clear();
+      currentUser = null;
       return null;
     }
   },
@@ -86,29 +78,19 @@ export const authService = {
     if (!currentUser) return null;
     return {
       user: currentUser,
-      accessToken: tokenStore.getAccessToken(),
     };
   },
 
   isAuthenticated() {
-    return Boolean(this.getSession()?.user);
+    return Boolean(currentUser || (isMock() && readSession()?.user));
   },
 
   getUser() {
-    return this.getSession()?.user ?? null;
+    return currentUser || (isMock() ? readSession()?.user : null);
   },
 
   getRole() {
     return this.getUser()?.role ?? null;
   },
-
-  async refresh() {
-    if (isMock()) return null;
-    const { data } = await authApi.refresh(tokenStore.getRefreshToken());
-    tokenStore.setTokens({
-      access: data.accessToken,
-      refresh: data.refreshToken || tokenStore.getRefreshToken(),
-    });
-    return data;
-  },
 };
+

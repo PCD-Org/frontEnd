@@ -10,8 +10,14 @@ export const useAuthStore = create((set) => ({
     set({ status: "loading" });
     try {
       const session = await authService.login(credentials);
+      const user =
+        authService.getUser() ||
+        session?.user ||
+        session?.data?.user ||
+        session?.data ||
+        session;
       set({
-        user: session.user,
+        user,
         isAuthenticated: true,
         status: "authenticated",
       });
@@ -26,4 +32,20 @@ export const useAuthStore = create((set) => ({
     await authService.logout();
     set({ user: null, isAuthenticated: false, status: "unauthenticated" });
   },
+
+  async checkAuth() {
+    try {
+      const user = await authService.getCurrentUser();
+      if (user) {
+        set({ user, isAuthenticated: true, status: "authenticated" });
+      } else {
+        set({ user: null, isAuthenticated: false, status: "unauthenticated" });
+      }
+      return user;
+    } catch {
+      set({ user: null, isAuthenticated: false, status: "unauthenticated" });
+      return null;
+    }
+  },
 }));
+

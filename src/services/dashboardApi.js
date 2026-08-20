@@ -18,7 +18,7 @@ export const dashboardApi = {
         research: researchStore.list().length,
       });
     }
-    const { data } = await api.get("/api/dashboard/stats");
+    const { data } = await api.get("/dashboard/stats");
     return data.data ?? data;
   },
 
@@ -26,7 +26,7 @@ export const dashboardApi = {
     if (isMock()) {
       return withDelay(mediaStore.list().slice(0, 5));
     }
-    const { data } = await api.get("/api/media?limit=5");
+    const { data } = await api.get("/media?limit=5");
     return data.data ?? data;
   },
 };
