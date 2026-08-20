@@ -15,11 +15,29 @@ const mockAdmins = [
   },
 ];
 
+export const normalizeAdmin = (item) => {
+  if (!item) return null;
+  return {
+    ...item,
+    id: item._id || item.id,
+    _id: item._id || item.id,
+  };
+};
+
 export const adminsApi = {
   async getAll(params) {
     if (isMock()) return withDelay([...mockAdmins]);
     const { data } = await api.get(endpoint, { params });
-    return data.data ?? data;
+    const rawList = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.data?.admins)
+      ? data.data.admins
+      : Array.isArray(data?.data?.users)
+      ? data.data.users
+      : Array.isArray(data?.data)
+      ? data.data
+      : [];
+    return rawList.map(normalizeAdmin);
   },
 
   async getById(id) {
@@ -28,7 +46,8 @@ export const adminsApi = {
       return withDelay(admin || null);
     }
     const { data } = await api.get(`${endpoint}/${id}`);
-    return data.data ?? data;
+    const rawItem = data?.data?.admin || data?.data?.user || data?.data || data;
+    return normalizeAdmin(rawItem);
   },
 
   async create(payload) {
@@ -43,6 +62,7 @@ export const adminsApi = {
       return withDelay(newAdmin);
     }
     const { data } = await api.post(endpoint, payload);
-    return data.data ?? data;
+    const rawItem = data?.data?.admin || data?.data?.user || data?.data || data;
+    return normalizeAdmin(rawItem);
   },
 };

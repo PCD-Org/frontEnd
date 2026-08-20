@@ -16,10 +16,22 @@ const Activities = () => {
   const { list } = useActivities();
   const { data: activities = [], isLoading, isError, refetch, isFetching } = list;
 
+  const safeActivities = Array.isArray(activities) ? activities : [];
   const filteredActivities =
     activeCategory === "all"
-      ? activities.slice(0, 6)
-      : activities.filter((activity) => activity.category === activeCategory).slice(0, 6);
+      ? safeActivities.slice(0, 6)
+      : safeActivities
+          .filter((activity) => {
+            const catKey =
+              typeof activity.category === "object"
+                ? activity.category?.key
+                : activity.category;
+            return (
+              catKey === activeCategory ||
+              (activeCategory === "psycho" && catKey === "psychosocial")
+            );
+          })
+          .slice(0, 6);
 
   return (
     <section className="mx-auto max-w-7xl overflow-hidden bg-white px-5 py-20">

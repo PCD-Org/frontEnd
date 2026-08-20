@@ -22,7 +22,11 @@ export default function ActivityCard({
   link,
 }) {
   const { t, dir, language } = useTranslation();
-  const [imgSrc, setImgSrc] = useState(coverImage || image || defaultImage);
+  const resolvedImage =
+    (typeof coverImage === "object" && coverImage !== null ? coverImage.url : coverImage) ||
+    image ||
+    defaultImage;
+  const [imgSrc, setImgSrc] = useState(resolvedImage);
 
   const targetLink = link || (id ? `/activities/${id}` : "#");
 

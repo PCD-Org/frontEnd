@@ -55,7 +55,37 @@ export default function ActivityForm({
   submitLabel,
 }) {
   const { t } = useTranslation();
-  const [values, setValues] = useState({ ...emptyValues, ...initialValues });
+  const [values, setValues] = useState(() => ({
+    ...emptyValues,
+    ...initialValues,
+    titleAr:
+      initialValues?.titleAr ||
+      (typeof initialValues?.title === "object"
+        ? initialValues?.title?.ar
+        : initialValues?.title) ||
+      "",
+    titleEn:
+      initialValues?.titleEn ||
+      (typeof initialValues?.title === "object"
+        ? initialValues?.title?.en
+        : "") ||
+      "",
+    category:
+      (typeof initialValues?.category === "object"
+        ? initialValues?.category?.key
+        : initialValues?.category) || "",
+    summary:
+      initialValues?.summary ||
+      (typeof initialValues?.description === "object"
+        ? initialValues?.description?.ar || initialValues?.description?.en
+        : initialValues?.description) ||
+      "",
+    date: initialValues?.date
+      ? typeof initialValues.date === "string"
+        ? initialValues.date.split("T")[0]
+        : initialValues.date
+      : emptyValues.date,
+  }));
   const [errors, setErrors] = useState({});
 
   const set = (field) => (event) =>

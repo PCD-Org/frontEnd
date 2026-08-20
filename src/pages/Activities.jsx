@@ -16,10 +16,20 @@ export default function Activities() {
   const { list } = useActivities();
   const { data: activities = [], isLoading, isError, refetch, isFetching } = list;
 
+  const safeActivities = Array.isArray(activities) ? activities : [];
   const filteredActivities =
     activeCategory === "all"
-      ? activities
-      : activities.filter((activity) => activity.category === activeCategory);
+      ? safeActivities
+      : safeActivities.filter((activity) => {
+          const catKey =
+            typeof activity.category === "object"
+              ? activity.category?.key
+              : activity.category;
+          return (
+            catKey === activeCategory ||
+            (activeCategory === "psycho" && catKey === "psychosocial")
+          );
+        });
 
   return (
     <div className="min-h-screen bg-[#FBFBFA]">

@@ -16,9 +16,11 @@ export default function ActivitiesList({
 }) {
   const { t, language } = useTranslation();
   const query = search.toLowerCase().trim();
-  const filtered = items.filter((item) =>
-    `${item.titleAr} ${item.titleEn}`.toLowerCase().includes(query)
-  );
+  const filtered = items.filter((item) => {
+    const ar = item.titleAr || (typeof item.title === "object" ? item.title?.ar : item.title) || "";
+    const en = item.titleEn || (typeof item.title === "object" ? item.title?.en : "") || "";
+    return `${ar} ${en}`.toLowerCase().includes(query);
+  });
 
   return (
     <div>
@@ -67,7 +69,9 @@ export default function ActivitiesList({
               {filtered.map((item) => (
                 <tr key={item.id} className="transition-colors hover:bg-surface/60">
                   <td className="px-4 py-3 font-medium text-[#001809]">
-                    {language === "ar" ? item.titleAr : item.titleEn}
+                    {language === "ar"
+                      ? item.titleAr || (typeof item.title === "object" ? item.title?.ar : item.title)
+                      : item.titleEn || (typeof item.title === "object" ? item.title?.en : item.titleAr || item.title)}
                   </td>
                   <td className="px-4 py-3">
                     <Badge tone="muted">

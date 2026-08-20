@@ -17,6 +17,15 @@ let mockInquiries = [
   },
 ];
 
+export const normalizeInquiry = (item) => {
+  if (!item) return null;
+  return {
+    ...item,
+    id: item._id || item.id,
+    _id: item._id || item.id,
+  };
+};
+
 export const contactInquiriesApi = {
   // Public inquiry submission (no auth required)
   async create(payload) {
@@ -31,7 +40,8 @@ export const contactInquiriesApi = {
       return withDelay(newInquiry);
     }
     const { data } = await api.post(endpoint, payload);
-    return data.data ?? data;
+    const rawItem = data?.data?.inquiry || data?.data || data;
+    return normalizeInquiry(rawItem);
   },
 
   // Admin inquiries retrieval
@@ -44,7 +54,16 @@ export const contactInquiriesApi = {
       return withDelay(result);
     }
     const { data } = await api.get(endpoint, { params });
-    return data.data ?? data;
+    const rawList = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.data?.inquiries)
+      ? data.data.inquiries
+      : Array.isArray(data?.data)
+      ? data.data
+      : Array.isArray(data?.inquiries)
+      ? data.inquiries
+      : [];
+    return rawList.map(normalizeInquiry);
   },
 
   // Admin inquiry status update
@@ -61,6 +80,7 @@ export const contactInquiriesApi = {
       return withDelay(mockInquiries.find((item) => item.id === id));
     }
     const { data } = await api.patch(`${endpoint}/${id}`, payload);
-    return data.data ?? data;
+    const rawItem = data?.data?.inquiry || data?.data || data;
+    return normalizeInquiry(rawItem);
   },
 };

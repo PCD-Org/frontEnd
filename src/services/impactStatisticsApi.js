@@ -25,11 +25,31 @@ let mockImpactStats = [
   },
 ];
 
+export const normalizeImpactStat = (item) => {
+  if (!item) return null;
+  return {
+    ...item,
+    id: item._id || item.id,
+    _id: item._id || item.id,
+    label: item.label,
+    value: item.value,
+  };
+};
+
 export const impactStatisticsApi = {
   async getAll() {
-    if (isMock()) return withDelay([...mockImpactStats]);
+    if (isMock()) return withDelay([...mockImpactStats].map(normalizeImpactStat));
     const { data } = await api.get(endpoint);
-    return data.data ?? data;
+    const rawList = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.data?.statistics)
+      ? data.data.statistics
+      : Array.isArray(data?.data)
+      ? data.data
+      : Array.isArray(data?.statistics)
+      ? data.statistics
+      : [];
+    return rawList.map(normalizeImpactStat);
   },
 
   async create(payload) {
@@ -42,7 +62,8 @@ export const impactStatisticsApi = {
       return withDelay(newStat);
     }
     const { data } = await api.post(endpoint, payload);
-    return data.data ?? data;
+    const rawItem = data?.data?.statistic || data?.data || data;
+    return normalizeImpactStat(rawItem);
   },
 
   async update(id, payload) {
@@ -53,7 +74,8 @@ export const impactStatisticsApi = {
       return withDelay(mockImpactStats.find((item) => item.id === id));
     }
     const { data } = await api.patch(`${endpoint}/${id}`, payload);
-    return data.data ?? data;
+    const rawItem = data?.data?.statistic || data?.data || data;
+    return normalizeImpactStat(rawItem);
   },
 
   async remove(id) {
