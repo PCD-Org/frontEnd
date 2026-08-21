@@ -1,64 +1,47 @@
-import api from "../utils/api";
-import { API_MODE } from "../utils/api";
-import { withDelay } from "../utils/mock";
-import { mediaStore } from "../features/media/mockMedia";
-import { newsStore } from "../features/news/mockNews";
-import { activitiesStore } from "../features/activities/mockActivities";
-import { researchStore } from "../features/research/mockResearch";
 import { activitiesApi } from "./activitiesApi";
-
-const isMock = () => API_MODE === "mock";
+import { impactStatisticsApi } from "./impactStatisticsApi";
+import { contactInquiriesApi } from "./contactInquiriesApi";
 
 export const dashboardApi = {
-  async getStats() {
-    if (isMock()) {
-      return withDelay({
-        media: mediaStore.list().length,
-        news: newsStore.list().length,
-        activities: activitiesStore.list().length,
-        research: researchStore.list().length,
-      });
-    }
-    try {
-      const { data } = await api.get("/dashboard/stats");
-      return data?.data ?? data;
-    } catch {
-      // Fallback gracefully without breaking UI
-      try {
-        const activities = await activitiesApi.getAll();
-        return {
-          media: 0,
-          news: 0,
-          activities: Array.isArray(activities) ? activities.length : 0,
-          research: 0,
-        };
-      } catch {
-        return {
-          media: 0,
-          news: 0,
-          activities: 0,
-          research: 0,
-        };
-      }
-    }
+  async getSummary() {
+    const [activitiesRes, impactStatsRes, inquiriesRes] = await Promise.allSettled([
+      activitiesApi.getAll(),
+      impactStatisticsApi.getAll(),
+      contactInquiriesApi.getAll(),
+    ]);
+
+    const activities =
+      activitiesRes.status === "fulfilled" && Array.isArray(activitiesRes.value)
+        ? activitiesRes.value
+        : [];
+    const impactStats =
+      impactStatsRes.status === "fulfilled" && Array.isArray(impactStatsRes.value)
+        ? impactStatsRes.value
+        : [];
+    const inquiries =
+      inquiriesRes.status === "fulfilled" && Array.isArray(inquiriesRes.value)
+        ? inquiriesRes.value
+        : [];
+
+    const newInquiriesCount = inquiries.filter((item) => item.status === "new").length;
+
+    return {
+      totalActivities: activities.length,
+      totalImpactStats: impactStats.length,
+      totalInquiries: inquiries.length,
+      newInquiries: newInquiriesCount,
+      recentActivities: activities.slice(0, 5),
+      recentInquiries: inquiries.slice(0, 5),
+    };
   },
 
-  async getRecentMedia() {
-    if (isMock()) {
-      return withDelay(mediaStore.list().slice(0, 5));
-    }
-    try {
-      const { data } = await api.get("/media?limit=5");
-      const rawList = Array.isArray(data)
-        ? data
-        : Array.isArray(data?.data?.media)
-        ? data.data.media
-        : Array.isArray(data?.data)
-        ? data.data
-        : [];
-      return rawList.map((m) => ({ ...m, id: m._id || m.id }));
-    } catch {
-      return [];
-    }
+  async getStats() {
+    const summary = await this.getSummary();
+    return {
+      activities: summary.totalActivities,
+      impactStats: summary.totalImpactStats,
+      inquiries: summary.totalInquiries,
+      newInquiries: summary.newInquiries,
+    };
   },
 };

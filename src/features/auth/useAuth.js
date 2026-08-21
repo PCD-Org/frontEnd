@@ -5,6 +5,7 @@ export function useAuth() {
   const user = useAuthStore((state) => state.user);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const status = useAuthStore((state) => state.status);
+  const isInitialized = useAuthStore((state) => state.isInitialized);
   const login = useAuthStore((state) => state.login);
   const logout = useAuthStore((state) => state.logout);
 
@@ -16,6 +17,7 @@ export function useAuth() {
     user,
     isAuthenticated,
     status,
+    isInitialized,
     login,
     logout,
     checkAuth,

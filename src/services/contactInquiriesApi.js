@@ -19,10 +19,16 @@ let mockInquiries = [
 
 export const normalizeInquiry = (item) => {
   if (!item) return null;
+  const id = item._id || item.id;
   return {
     ...item,
-    id: item._id || item.id,
-    _id: item._id || item.id,
+    id,
+    _id: id,
+    name: item.name || "",
+    email: item.email || "",
+    message: item.message || "",
+    status: item.status || "new",
+    createdAt: item.createdAt || null,
   };
 };
 

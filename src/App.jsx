@@ -19,6 +19,8 @@ import DashboardPage from "./pages/DashboardPage";
 import MediaPage from "./pages/MediaPage";
 import NewsPage from "./pages/NewsPage";
 import ActivitiesPage from "./pages/ActivitiesPage";
+import ImpactStatisticsPage from "./pages/ImpactStatisticsPage";
+import ContactInquiriesPage from "./pages/ContactInquiriesPage";
 import ResearchPage from "./pages/ResearchPage";
 import SettingsPage from "./pages/SettingsPage";
 
@@ -60,9 +62,11 @@ function App() {
             }
           >
             <Route index element={<DashboardPage />} />
+            <Route path="activities" element={<ActivitiesPage />} />
+            <Route path="impact-statistics" element={<ImpactStatisticsPage />} />
+            <Route path="contact-inquiries" element={<ContactInquiriesPage />} />
             <Route path="media" element={<MediaPage />} />
             <Route path="news" element={<NewsPage />} />
-            <Route path="activities" element={<ActivitiesPage />} />
             <Route path="research" element={<ResearchPage />} />
             <Route path="settings" element={<SettingsPage />} />
           </Route>

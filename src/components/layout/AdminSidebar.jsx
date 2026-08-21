@@ -2,9 +2,11 @@ import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import {
   LayoutDashboard,
+  CalendarDays,
+  BarChart3,
+  Mail,
   Images,
   Newspaper,
-  CalendarDays,
   BookOpen,
   Settings,
   LogOut,
@@ -15,9 +17,11 @@ import { useTranslation } from "../../utils/useTranslation";
 
 const navItems = [
   { to: "/admin", key: "admin.nav.dashboard", icon: LayoutDashboard, end: true },
+  { to: "/admin/activities", key: "admin.nav.activities", icon: CalendarDays, permission: "activities.read" },
+  { to: "/admin/impact-statistics", key: "admin.nav.impactStats", icon: BarChart3 },
+  { to: "/admin/contact-inquiries", key: "admin.nav.inquiries", icon: Mail },
   { to: "/admin/media", key: "admin.nav.media", icon: Images, permission: "media.read" },
   { to: "/admin/news", key: "admin.nav.news", icon: Newspaper, permission: "news.read" },
-  { to: "/admin/activities", key: "admin.nav.activities", icon: CalendarDays, permission: "activities.read" },
   { to: "/admin/research", key: "admin.nav.research", icon: BookOpen, permission: "research.read" },
   { to: "/admin/settings", key: "admin.nav.settings", icon: Settings },
 ];

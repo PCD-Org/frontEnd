@@ -13,8 +13,8 @@ import {
 } from "lucide-react";
 import { useTranslation } from "../utils/useTranslation";
 import { useActivity, useActivities } from "../features/activities/useActivities";
-import defaultImage from "../assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg";
 import ActivityCard from "../components/ActivityCard";
+import ActivityImage from "../components/ui/ActivityImage";
 
 const categoryColors = {
   workshops: "bg-red-100 text-red-800 border-red-200",
@@ -30,8 +30,6 @@ export default function ActivityDetailsPage() {
 
   const { data: activity, isLoading, isError, error, refetch, isFetching } = useActivity(id);
   const { list: allActivitiesQuery } = useActivities();
-
-  const [imgSrc, setImgSrc] = useState(null);
 
   const handleShare = async () => {
     if (navigator.clipboard) {
@@ -165,7 +163,6 @@ export default function ActivityDetailsPage() {
   // SUCCESSFUL DATA PRESENTATION
   const displayTitle = getLocalized(activity.title, activity.titleKey);
   const displayDescription = getLocalized(activity.description || activity.summary, activity.descriptionKey);
-  const currentImage = imgSrc || activity.coverImage || activity.image || defaultImage;
 
   const categorySlug = activity.category;
   const categoryLabel = categorySlug
@@ -247,12 +244,13 @@ export default function ActivityDetailsPage() {
           </div>
 
           {/* Hero Cover Image */}
-          <div className="relative w-full bg-gray-100">
-            <img
-              src={currentImage}
+          <div className="relative w-full bg-gray-100 flex items-center justify-center">
+            <ActivityImage
+              src={activity.coverImage || activity.image}
               alt={displayTitle}
-              onError={() => setImgSrc(defaultImage)}
+              containerClassName="w-full max-h-[500px] flex items-center justify-center overflow-hidden"
               className="max-h-[500px] w-full object-cover"
+              fallbackClassName="h-72 sm:h-96 w-full object-contain p-12"
               loading="eager"
             />
           </div>

@@ -26,7 +26,7 @@ const createMockSession = (email) => ({
     id: "demo-admin",
     name: "Admin",
     email,
-    role: "superadmin",
+    role: "admin",
   },
   issuedAt: new Date().toISOString(),
 });

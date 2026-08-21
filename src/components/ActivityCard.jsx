@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Calendar } from "lucide-react";
 import { useTranslation } from "../utils/useTranslation";
-import defaultImage from "../assets/79a6c5cb8ad4f873287640653a8177127eca0c9b.jpg";
+import ActivityImage from "./ui/ActivityImage";
 
 const categoryColors = {
   workshops: "bg-red-100 text-red-700",
@@ -24,9 +23,7 @@ export default function ActivityCard({
   const { t, dir, language } = useTranslation();
   const resolvedImage =
     (typeof coverImage === "object" && coverImage !== null ? coverImage.url : coverImage) ||
-    image ||
-    defaultImage;
-  const [imgSrc, setImgSrc] = useState(resolvedImage);
+    image;
 
   const targetLink = link || (id ? `/activities/${id}` : "#");
 
@@ -68,17 +65,18 @@ export default function ActivityCard({
       >
         {/* Image Container */}
         <div className="relative h-56 w-full overflow-hidden bg-gray-100">
-          <img
-            src={imgSrc}
+          <ActivityImage
+            src={resolvedImage}
             alt={displayTitle || "Activity"}
-            onError={() => setImgSrc(defaultImage)}
+            containerClassName="h-full w-full"
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            fallbackClassName="h-full w-full object-contain p-8 transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
           />
 
           {categoryLabel && (
             <span
-              className={`absolute start-4 top-4 rounded-full px-3 py-1 text-xs font-semibold shadow-xs ${badgeColor}`}
+              className={`absolute start-4 top-4 rounded-full px-3 py-1 text-xs font-semibold shadow-xs z-10 ${badgeColor}`}
             >
               {categoryLabel}
             </span>

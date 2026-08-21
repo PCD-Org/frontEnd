@@ -18,10 +18,6 @@ export const normalizeActivity = (raw) => {
       ? raw.category
       : "";
 
-  // Normalize category aliases (e.g., psychosocial -> psycho)
-  const normalizedCategory =
-    categoryKey === "psychosocial" ? "psycho" : categoryKey;
-
   const coverImageUrl =
     typeof raw.coverImage === "object" && raw.coverImage !== null
       ? raw.coverImage.url
@@ -29,37 +25,41 @@ export const normalizeActivity = (raw) => {
       ? raw.coverImage
       : raw.image || null;
 
+  const titleAr =
+    typeof raw.title === "object" && raw.title !== null
+      ? raw.title?.ar || ""
+      : raw.titleAr || (typeof raw.title === "string" ? raw.title : "");
+
+  const titleEn =
+    typeof raw.title === "object" && raw.title !== null
+      ? raw.title?.en || ""
+      : raw.titleEn || "";
+
+  const descriptionAr =
+    typeof raw.description === "object" && raw.description !== null
+      ? raw.description?.ar || ""
+      : raw.descriptionAr || (typeof raw.description === "string" ? raw.description : "");
+
+  const descriptionEn =
+    typeof raw.description === "object" && raw.description !== null
+      ? raw.description?.en || ""
+      : raw.descriptionEn || "";
+
   return {
     ...raw,
     id,
     _id: id,
-    category: normalizedCategory || raw.category,
+    category: categoryKey || raw.category || "development",
     rawCategory: raw.category,
     coverImage: coverImageUrl,
     image: coverImageUrl || raw.image,
-    title: raw.title,
-    titleAr:
-      typeof raw.title === "object"
-        ? raw.title?.ar
-        : raw.titleAr || (typeof raw.title === "string" ? raw.title : ""),
-    titleEn:
-      typeof raw.title === "object"
-        ? raw.title?.en
-        : raw.titleEn || "",
-    description: raw.description,
-    descriptionAr:
-      typeof raw.description === "object"
-        ? raw.description?.ar
-        : raw.descriptionAr ||
-          (typeof raw.description === "string" ? raw.description : ""),
-    descriptionEn:
-      typeof raw.description === "object"
-        ? raw.description?.en
-        : raw.descriptionEn || "",
-    summary:
-      typeof raw.description === "object"
-        ? raw.description?.ar || raw.description?.en
-        : raw.summary || (typeof raw.description === "string" ? raw.description : ""),
+    title: raw.title || { ar: titleAr, en: titleEn },
+    titleAr,
+    titleEn,
+    description: raw.description || { ar: descriptionAr, en: descriptionEn },
+    descriptionAr,
+    descriptionEn,
+    summary: descriptionAr || descriptionEn || raw.summary || "",
     date: raw.date
       ? typeof raw.date === "string"
         ? raw.date.split("T")[0]
@@ -80,44 +80,52 @@ const buildActivityFormData = (payload) => {
   }
 
   // Handle title as JSON string
-  if (payload.titleAr !== undefined || payload.titleEn !== undefined) {
-    formData.append(
-      "title",
-      JSON.stringify({
-        ar: payload.titleAr || "",
-        en: payload.titleEn || "",
-      })
-    );
-  } else if (typeof payload.title === "object" && payload.title !== null) {
-    formData.append("title", JSON.stringify(payload.title));
-  } else if (typeof payload.title === "string") {
-    formData.append("title", payload.title);
-  }
+  const titleAr =
+    payload.titleAr !== undefined
+      ? payload.titleAr
+      : typeof payload.title === "object"
+      ? payload.title?.ar || ""
+      : payload.title || "";
+  const titleEn =
+    payload.titleEn !== undefined
+      ? payload.titleEn
+      : typeof payload.title === "object"
+      ? payload.title?.en || ""
+      : "";
+
+  formData.append(
+    "title",
+    JSON.stringify({
+      ar: titleAr || "",
+      en: titleEn || "",
+    })
+  );
 
   // Handle description as JSON string
-  if (
-    payload.descriptionAr !== undefined ||
-    payload.descriptionEn !== undefined ||
-    payload.summary !== undefined
-  ) {
-    formData.append(
-      "description",
-      JSON.stringify({
-        ar: payload.descriptionAr || payload.summary || "",
-        en: payload.descriptionEn || payload.summary || "",
-      })
-    );
-  } else if (
-    typeof payload.description === "object" &&
-    payload.description !== null
-  ) {
-    formData.append("description", JSON.stringify(payload.description));
-  } else if (typeof payload.description === "string") {
-    formData.append("description", payload.description);
-  }
+  const descAr =
+    payload.descriptionAr !== undefined
+      ? payload.descriptionAr
+      : typeof payload.description === "object"
+      ? payload.description?.ar || ""
+      : payload.summary || "";
+  const descEn =
+    payload.descriptionEn !== undefined
+      ? payload.descriptionEn
+      : typeof payload.description === "object"
+      ? payload.description?.en || ""
+      : "";
+
+  formData.append(
+    "description",
+    JSON.stringify({
+      ar: descAr || "",
+      en: descEn || "",
+    })
+  );
 
   if (payload.category) {
-    formData.append("category", payload.category);
+    const cat = payload.category === "psycho" ? "psychosocial" : payload.category;
+    formData.append("category", cat);
   }
 
   if (payload.date) {
