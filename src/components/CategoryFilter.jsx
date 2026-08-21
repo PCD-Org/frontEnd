@@ -12,9 +12,11 @@ const CategoryFilter = ({
 
   return (
     <div
-      className={`flex items-center overflow-x-auto ${isPills ? "border-b border-gray-100 pb-5 mb-8" : ""} ${
+      className={`flex items-center overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden ${
+        isPills ? "border-b border-gray-100 pb-4 mb-6 md:pb-5 md:mb-8" : ""
+      } ${
         isPills
-          ? "gap-3  justify-start " 
+          ? "gap-2 md:gap-3 justify-start px-1" 
           : "bg-[#F4F5F0] p-1.5 rounded-full gap-1" 
       }`}
     >
@@ -23,14 +25,14 @@ const CategoryFilter = ({
         const buttonStyles = isActive
           ? "text-white"
           : isPills
-          ? "border border-gray-200  bg-[#F4F5F0] text-gray-700 hover:bg-[#e8e9e3] hover:text-[#0D3B2E]"
+          ? "border border-gray-200 bg-[#F4F5F0] text-gray-700 hover:bg-[#e8e9e3] hover:text-[#0D3B2E]"
           : "text-gray-700 hover:text-[#0D3B2E]";
 
         return (
           <button
             key={cat.slug}
             onClick={() => onSelectCategory(cat.slug)}
-            className={`relative px-6 py-2.5 rounded-full text-base font-semibold transition-colors duration-200 z-10 whitespace-nowrap ${buttonStyles}`}
+            className={`relative px-3.5 py-1.5 md:px-6 md:py-2.5 rounded-full text-xs sm:text-sm md:text-base font-semibold transition-colors duration-200 z-10 whitespace-nowrap shrink-0 ${buttonStyles}`}
           >
             {isActive && (
               <motion.div

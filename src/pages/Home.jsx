@@ -2,7 +2,8 @@ import { HeroSection } from "../components/home/HeroSection";
 import { OurGoals } from "../components/home/OurGoals";
 import { Qoute } from "../components/home/Qoute";
 import { WhoWeAre } from "../components/home/WhoWeAre";
-import Activities from "../components/home/Activities"
+import Activities from "../components/home/Activities";
+import {PartnersAndImpact} from "../components/home/PartnersAndImpact";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <OurGoals />
       <Qoute />
       <Activities/>
+      <PartnersAndImpact/>
     </>
   )
 }

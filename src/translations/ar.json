@@ -119,5 +119,20 @@
   "footer.location": "فلسطين - غزة - الرمال",
   "footer.copyright": "© 2024 الهيئة الأهلية الفلسطينية للبيئة والتنمية. جميع الحقوق محفوظة.",
 
-  "breadcrumb.home": "الرئيسية"
+  "breadcrumb.home": "الرئيسية" ,
+
+"partnersAndImpact.title": "شركاؤنا في النجاح",
+"partnersAndImpact.impactTitle": "أثرنا الملموس في المجتمع الفلسطيني",
+"partnersAndImpact.impactDesc": "نسعى دائماً لتحويل الأهداف إلى حقائق ملموسة تساهم في تحسين جودة الحياة والحفاظ على البيئة للأجيال القادمة.",
+"partnersAndImpact.beneficiaries": "مستفيد مباشر",
+"partnersAndImpact.satisfaction": "رضا المجتمع",
+"partnersAndImpact.trees": "شجرة تم زراعتها",
+"partnersAndImpact.workshops": "ورشة عمل تدريبية",
+"partnersAndImpact.partnerships": "شراكة دولية",
+
+"newsletter.title": "ابقَ على اطلاع بأنشطتنا",
+  "newsletter.subtitle": "اشترك في نشرتنا البريدية لتصلك آخر أخبار مشاريعنا وقصص النجاح.",
+  "newsletter.placeholder": "بريدك الإلكتروني",
+  "newsletter.button": "اشتراك"
+
 }

@@ -5,6 +5,7 @@ import ActivityCard from '../components/ActivityCard';
 import { categories, activitiesData } from '../activitiesData';
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from '../utils/useTranslation';
+import Newsletter from '../components/ui/Newsletter';
 
 
 export default function Activities() {
@@ -68,6 +69,7 @@ export default function Activities() {
           </AnimatePresence>
         </motion.div>
       </div>
+       <Newsletter/>
     </div>
   );
 }

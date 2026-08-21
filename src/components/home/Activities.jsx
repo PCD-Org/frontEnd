@@ -84,6 +84,8 @@ const Activities = () => {
           {t("homeActivities.viewAll")}
         </button>
       </div>
+
+     
     </section>
   );
 };

@@ -119,5 +119,22 @@
   "footer.location": "Palestine - Gaza - Alremal",
   "footer.copyright": "© 2024 Palestinian Organization for Environment & Development. All rights reserved.",
 
-  "breadcrumb.home": "Home"
+  "breadcrumb.home": "Home",
+
+
+"partnersAndImpact.title": "Our Partners in Success",
+"partnersAndImpact.impactTitle": "Our Tangible Impact on Palestinian Society",
+"partnersAndImpact.impactDesc": "We always strive to turn goals into tangible reality that contributes to improving quality of life and preserving the environment.",
+"partnersAndImpact.beneficiaries": "Direct Beneficiaries",
+"partnersAndImpact.satisfaction": "Community Satisfaction",
+"partnersAndImpact.trees": "Trees Planted",
+"partnersAndImpact.workshops": "Training Workshops",
+"partnersAndImpact.partnerships": "International Partnerships",
+
+
+"newsletter.title": "Stay Updated with Our Activities",
+  "newsletter.subtitle": "Subscribe to our newsletter to receive the latest news on our projects and success stories.",
+  "newsletter.placeholder": "Your email address",
+  "newsletter.button": "Subscribe"
+
 }
