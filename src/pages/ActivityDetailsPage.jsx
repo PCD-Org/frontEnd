@@ -3,6 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import {
   ArrowLeft,
   ArrowRight,
+  ChevronLeft,
+  ChevronRight,
   Calendar,
   Tag,
   Share2,
@@ -10,6 +12,8 @@ import {
   FileQuestion,
   RotateCcw,
   Check,
+  Star,
+  Images as ImagesIcon,
 } from "lucide-react";
 import { useTranslation } from "../utils/useTranslation";
 import { useActivity, useActivities } from "../features/activities/useActivities";
@@ -27,9 +31,17 @@ export default function ActivityDetailsPage() {
   const { id } = useParams();
   const { t, dir, language } = useTranslation();
   const [copied, setCopied] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [prevId, setPrevId] = useState(id);
 
   const { data: activity, isLoading, isError, error, refetch, isFetching } = useActivity(id);
   const { list: allActivitiesQuery } = useActivities();
+
+  // Reset active image on activity id change
+  if (prevId !== id) {
+    setPrevId(id);
+    setActiveImageIndex(0);
+  }
 
   const handleShare = async () => {
     if (navigator.clipboard) {
@@ -175,6 +187,22 @@ export default function ActivityDetailsPage() {
 
   const badgeStyle = categoryColors[categorySlug] || "bg-[#E6F4EA] text-[#0D3B2E] border-transparent";
 
+  // Gather all images (new schema images array or fallback to coverImage/image)
+  const allImages =
+    Array.isArray(activity.images) && activity.images.length > 0
+      ? activity.images
+      : [activity.coverImage || activity.image].filter(Boolean);
+
+  const currentImage = allImages[activeImageIndex] || allImages[0] || null;
+
+  const handlePrevImage = () => {
+    setActiveImageIndex((prev) => (prev <= 0 ? allImages.length - 1 : prev - 1));
+  };
+
+  const handleNextImage = () => {
+    setActiveImageIndex((prev) => (prev >= allImages.length - 1 ? 0 : prev + 1));
+  };
+
   // Related activities (excluding current)
   const relatedActivities = (allActivitiesQuery.data || [])
     .filter((act) => String(act.id) !== String(id))
@@ -243,16 +271,100 @@ export default function ActivityDetailsPage() {
             </h1>
           </div>
 
-          {/* Hero Cover Image */}
-          <div className="relative w-full bg-gray-100 flex items-center justify-center">
-            <ActivityImage
-              src={activity.coverImage || activity.image}
-              alt={displayTitle}
-              containerClassName="w-full max-h-[500px] flex items-center justify-center overflow-hidden"
-              className="max-h-[500px] w-full object-cover"
-              fallbackClassName="h-72 sm:h-96 w-full object-contain p-12"
-              loading="eager"
-            />
+          {/* Hero Image / Gallery Section */}
+          <div className="relative w-full bg-gray-100">
+            {/* Main Active Image Display */}
+            <div className="relative w-full flex items-center justify-center overflow-hidden bg-gray-950/5">
+              <ActivityImage
+                src={currentImage}
+                alt={displayTitle}
+                containerClassName="w-full max-h-[520px] min-h-[300px] sm:min-h-[400px] flex items-center justify-center overflow-hidden"
+                className="max-h-[520px] w-full object-cover transition-all duration-300"
+                fallbackClassName="h-72 sm:h-96 w-full object-contain p-12"
+                loading="eager"
+              />
+
+              {/* Cover badge if showing first image */}
+              {activeImageIndex === 0 && (
+                <span className="absolute start-4 top-4 z-10 flex items-center gap-1.5 rounded-full bg-[#0D3B2E]/90 px-3 py-1 text-xs font-semibold text-white shadow-md backdrop-blur-xs">
+                  <Star size={12} className="fill-amber-400 text-amber-400" />
+                  <span>{t("activitiesPage.details.coverImageLabel") || "صورة الغلاف"}</span>
+                </span>
+              )}
+
+              {/* Multiple Images Controls & Counter */}
+              {allImages.length > 1 && (
+                <>
+                  <div
+                    className="absolute end-4 top-4 z-10 flex items-center gap-1.5 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white shadow-sm backdrop-blur-xs"
+                    dir="ltr"
+                  >
+                    <ImagesIcon size={12} />
+                    <span>
+                      {activeImageIndex + 1} / {allImages.length}
+                    </span>
+                  </div>
+
+                  {/* Previous Button */}
+                  <button
+                    type="button"
+                    onClick={dir === "rtl" ? handleNextImage : handlePrevImage}
+                    aria-label="Previous Image"
+                    className="absolute start-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/45 p-2 text-white shadow-md backdrop-blur-xs transition hover:bg-black/75 hover:scale-105 active:scale-95"
+                  >
+                    {dir === "rtl" ? <ChevronRight size={22} /> : <ChevronLeft size={22} />}
+                  </button>
+
+                  {/* Next Button */}
+                  <button
+                    type="button"
+                    onClick={dir === "rtl" ? handlePrevImage : handleNextImage}
+                    aria-label="Next Image"
+                    className="absolute end-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/45 p-2 text-white shadow-md backdrop-blur-xs transition hover:bg-black/75 hover:scale-105 active:scale-95"
+                  >
+                    {dir === "rtl" ? <ChevronLeft size={22} /> : <ChevronRight size={22} />}
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Thumbnail Strip (if multiple images) */}
+            {allImages.length > 1 && (
+              <div className="border-t border-gray-200/80 bg-white/90 p-3 backdrop-blur-xs">
+                <div className="flex items-center gap-2.5 overflow-x-auto py-1 scrollbar-thin">
+                  {allImages.map((imgUrl, idx) => {
+                    const isActive = idx === activeImageIndex;
+                    const isCover = idx === 0;
+
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setActiveImageIndex(idx)}
+                        className={`group relative shrink-0 overflow-hidden rounded-xl transition-all duration-200 focus:outline-none ${
+                          isActive
+                            ? "ring-2 ring-[#006c48] ring-offset-2 scale-102 opacity-100 shadow-sm"
+                            : "opacity-60 hover:opacity-100 hover:scale-102"
+                        }`}
+                      >
+                        <ActivityImage
+                          src={imgUrl}
+                          alt={`Thumbnail ${idx + 1}`}
+                          containerClassName="h-16 w-20 sm:h-18 sm:w-24 bg-gray-100"
+                          className="h-full w-full object-cover"
+                          fallbackClassName="h-full w-full object-contain p-2"
+                        />
+                        {isCover && (
+                          <span className="absolute bottom-1 start-1 rounded bg-[#0D3B2E]/90 px-1.5 py-0.5 text-[9px] font-bold text-white shadow-xs">
+                            {t("activitiesPage.details.coverImageLabel") || "غلاف"}
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Article Body */}
@@ -299,6 +411,7 @@ export default function ActivityDetailsPage() {
                   id={item.id}
                   image={item.image}
                   coverImage={item.coverImage}
+                  images={item.images}
                   category={item.category}
                   title={item.title || item.titleAr}
                   date={item.date}

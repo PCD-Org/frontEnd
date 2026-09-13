@@ -108,7 +108,10 @@ export default function DashboardPage() {
                   language === "ar"
                     ? act.titleAr || (typeof act.title === "object" ? act.title?.ar : act.title)
                     : act.titleEn || (typeof act.title === "object" ? act.title?.en : act.titleAr || act.title);
-                const img = act.coverImage || act.image;
+                const img =
+                  (Array.isArray(act.images) && act.images.length > 0 ? act.images[0] : null) ||
+                  act.coverImage ||
+                  act.image;
 
                 return (
                   <div

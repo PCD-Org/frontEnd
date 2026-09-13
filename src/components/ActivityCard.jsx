@@ -14,6 +14,7 @@ export default function ActivityCard({
   id,
   image,
   coverImage,
+  images,
   category,
   title,
   description,
@@ -21,9 +22,14 @@ export default function ActivityCard({
   link,
 }) {
   const { t, dir, language } = useTranslation();
-  const resolvedImage =
-    (typeof coverImage === "object" && coverImage !== null ? coverImage.url : coverImage) ||
-    image;
+
+  // Pick the first image from images array as cover, with backward compatibility
+  const firstFromArray = Array.isArray(images) && images.length > 0 ? images[0] : null;
+  const resolvedFirstImage =
+    typeof firstFromArray === "object" && firstFromArray !== null ? firstFromArray.url : firstFromArray;
+  const resolvedCoverImage =
+    typeof coverImage === "object" && coverImage !== null ? coverImage.url : coverImage;
+  const resolvedImage = resolvedFirstImage || resolvedCoverImage || image;
 
   const targetLink = link || (id ? `/activities/${id}` : "#");
 

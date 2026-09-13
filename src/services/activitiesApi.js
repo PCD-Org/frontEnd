@@ -18,12 +18,34 @@ export const normalizeActivity = (raw) => {
       ? raw.category
       : "";
 
+  // Extract raw images array if available
+  const rawImages = Array.isArray(raw.images)
+    ? raw.images
+    : Array.isArray(raw.photos)
+    ? raw.photos
+    : [];
+
+  const normalizedImages = rawImages
+    .map((img) =>
+      typeof img === "object" && img !== null ? img.url || img.secure_url || img.path || "" : img
+    )
+    .filter(Boolean);
+
   const coverImageUrl =
-    typeof raw.coverImage === "object" && raw.coverImage !== null
+    normalizedImages.length > 0
+      ? normalizedImages[0]
+      : typeof raw.coverImage === "object" && raw.coverImage !== null
       ? raw.coverImage.url
       : typeof raw.coverImage === "string"
       ? raw.coverImage
       : raw.image || null;
+
+  const finalImages =
+    normalizedImages.length > 0
+      ? normalizedImages
+      : coverImageUrl
+      ? [coverImageUrl]
+      : [];
 
   const titleAr =
     typeof raw.title === "object" && raw.title !== null
@@ -51,6 +73,7 @@ export const normalizeActivity = (raw) => {
     _id: id,
     category: categoryKey || raw.category || "development",
     rawCategory: raw.category,
+    images: finalImages,
     coverImage: coverImageUrl,
     image: coverImageUrl || raw.image,
     title: raw.title || { ar: titleAr, en: titleEn },
@@ -75,8 +98,24 @@ const buildActivityFormData = (payload) => {
 
   const formData = new FormData();
 
-  if (payload.coverImage && payload.coverImage instanceof File) {
-    formData.append("coverImage", payload.coverImage);
+  // Handle multiple images in order
+  const imageFiles = Array.isArray(payload.images)
+    ? payload.images.filter((img) => img instanceof File)
+    : [];
+
+  if (imageFiles.length > 0) {
+    // Append files to 'images[]' matching backend route expectations (up to 10 images)
+    imageFiles.forEach((file) => {
+      formData.append("images[]", file);
+    });
+  } else if (payload.coverImage && payload.coverImage instanceof File) {
+    // Single cover image fallback
+    formData.append("images[]", payload.coverImage);
+  }
+
+  // Support clearImages flag on PATCH when all images are intentionally cleared
+  if (payload.clearImages) {
+    formData.append("clearImages", "true");
   }
 
   // Handle title as JSON string

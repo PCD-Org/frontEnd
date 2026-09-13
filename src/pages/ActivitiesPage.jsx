@@ -26,6 +26,7 @@ export default function ActivitiesPage() {
   const [search, setSearch] = useState("");
   const [creating, setCreating] = useState(false);
   const [viewingItem, setViewingItem] = useState(null);
+  const [viewImageIndex, setViewImageIndex] = useState(0);
   const [editingItem, setEditingItem] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
 
@@ -98,7 +99,10 @@ export default function ActivitiesPage() {
           items={list.data}
           search={search}
           onSearchChange={setSearch}
-          onView={setViewingItem}
+          onView={(item) => {
+            setViewImageIndex(0);
+            setViewingItem(item);
+          }}
           onEdit={setEditingItem}
           onDelete={setDeleteTarget}
           canEdit={canEdit}
@@ -162,15 +166,54 @@ export default function ActivitiesPage() {
         size="lg"
         closeLabel={t("common.close")}
       >
-        {viewingItem && (
-          <div className="flex flex-col gap-5">
-            <ActivityImage
-              src={viewingItem.coverImage || viewingItem.image}
-              alt={viewingItem.titleAr || (typeof viewingItem.title === "object" ? viewingItem.title?.ar : viewingItem.title) || ""}
-              containerClassName="overflow-hidden rounded-xl bg-surface border border-[#E5E7E5] max-h-72 h-56 w-full flex items-center justify-center"
-              className="w-full h-full object-cover"
-              fallbackClassName="h-full w-full object-contain p-6"
-            />
+        {viewingItem && (() => {
+          const itemImages =
+            Array.isArray(viewingItem.images) && viewingItem.images.length > 0
+              ? viewingItem.images
+              : [viewingItem.coverImage || viewingItem.image].filter(Boolean);
+          const activeImg = itemImages[viewImageIndex] || itemImages[0] || null;
+
+          return (
+            <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-2">
+                <ActivityImage
+                  src={activeImg}
+                  alt={viewingItem.titleAr || (typeof viewingItem.title === "object" ? viewingItem.title?.ar : viewingItem.title) || ""}
+                  containerClassName="overflow-hidden rounded-xl bg-surface border border-[#E5E7E5] max-h-72 h-56 w-full flex items-center justify-center"
+                  className="w-full h-full object-cover"
+                  fallbackClassName="h-full w-full object-contain p-6"
+                />
+
+                {itemImages.length > 1 && (
+                  <div className="flex items-center gap-2 overflow-x-auto py-1 scrollbar-thin">
+                    {itemImages.map((img, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setViewImageIndex(idx)}
+                        className={`relative shrink-0 rounded-lg overflow-hidden border transition-all ${
+                          idx === viewImageIndex
+                            ? "border-primary ring-2 ring-primary/40 scale-102"
+                            : "border-gray-200 opacity-60 hover:opacity-100"
+                        }`}
+                      >
+                        <ActivityImage
+                          src={img}
+                          alt=""
+                          containerClassName="h-12 w-16 bg-gray-100"
+                          className="h-full w-full object-cover"
+                          fallbackClassName="h-full w-full object-contain p-1"
+                        />
+                        {idx === 0 && (
+                          <span className="absolute bottom-0.5 start-0.5 rounded bg-[#0D3B2E] px-1 text-[8px] font-bold text-white">
+                            غلاف
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
 
             <div className="flex flex-wrap items-center gap-3">
               <Badge tone="muted">
@@ -234,7 +277,8 @@ export default function ActivitiesPage() {
               </Button>
             </div>
           </div>
-        )}
+        );
+      })()}
       </Modal>
 
       {/* Delete Confirmation Dialog */}

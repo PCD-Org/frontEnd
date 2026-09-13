@@ -100,6 +100,7 @@ export default function Activities() {
                       id={item.id}
                       image={item.image}
                       coverImage={item.coverImage}
+                      images={item.images}
                       category={item.category}
                       title={item.title || item.titleAr}
                       date={item.date}

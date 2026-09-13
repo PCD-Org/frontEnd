@@ -82,7 +82,10 @@ export default function ActivitiesList({
                     language === "ar"
                       ? item.titleEn || (typeof item.title === "object" ? item.title?.en : "")
                       : item.titleAr || (typeof item.title === "object" ? item.title?.ar : "");
-                  const img = item.coverImage || item.image;
+                  const img =
+                    (Array.isArray(item.images) && item.images.length > 0 ? item.images[0] : null) ||
+                    item.coverImage ||
+                    item.image;
 
                   return (
                     <tr key={item.id || item._id} className="transition-colors hover:bg-surface/60">
@@ -146,7 +149,10 @@ export default function ActivitiesList({
                 language === "ar"
                   ? item.titleAr || (typeof item.title === "object" ? item.title?.ar : item.title)
                   : item.titleEn || (typeof item.title === "object" ? item.title?.en : item.titleAr || item.title);
-              const img = item.coverImage || item.image;
+              const img =
+                (Array.isArray(item.images) && item.images.length > 0 ? item.images[0] : null) ||
+                item.coverImage ||
+                item.image;
 
               return (
                 <div
