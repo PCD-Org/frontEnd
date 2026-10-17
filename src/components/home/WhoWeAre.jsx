@@ -22,15 +22,15 @@ export const WhoWeAre = () => {
           
           <div className="flex items-center gap-2 rounded-2xl p-2 bg-primary w-fit">
             <Leaf className="w-5 h-5 text-white" /> 
-            <h2 className=" font-extrabold text-white tracking-tight">
+            <span className="font-extrabold text-white tracking-tight">
               {t("whoWeAre.badge")}
-            </h2>
+            </span>
           </div>
 
           <div className="space-y-6">
-            <h1 className="text-3xl md:text-5xl font-bold leading-tight text-gray-950">
+            <h2 className="text-3xl md:text-5xl font-bold leading-tight text-gray-950">
               {t("whoWeAre.title")} <span className="text-primary">{t("whoWeAre.titleHighlight")}</span>
-            </h1>
+            </h2>
             
             <p className="text-lg text-gray-700 leading-relaxed font-light">
               {t("whoWeAre.p1")}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Navigate, Link, useLocation, useNavigate } from "react-router-dom";
 import { Leaf, ArrowRight } from "lucide-react";
+import SEO from "../components/common/SEO";
 import { useAuth } from "../features/auth/useAuth";
 import { useTranslation } from "../utils/useTranslation";
 import { API_MODE } from "../utils/api";
@@ -56,6 +57,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-surface px-4 py-10">
+      <SEO title="تسجيل الدخول - لوحة التحكم" noindex={true} />
       <div className="w-full max-w-md">
         <div className="rounded-2xl border border-[#E5E7E5] bg-white p-6 shadow-[0_8px_30px_rgba(0,24,9,0.05)] sm:p-8">
           <div className="mb-6 flex items-center gap-3">

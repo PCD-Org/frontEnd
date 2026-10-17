@@ -1,30 +1,46 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Activities from "./pages/Activities";
-import ActivityDetailsPage from "./pages/ActivityDetailsPage";
 import { RootLayout } from "./components/layout/RootLayout";
-import Research from "./pages/Research";
-import News from "./pages/News";
-import useLanguageStore from "./store/useLanguageStore";
 import AdminLayout from "./components/layout/AdminLayout";
 import ProtectedRoute from "./features/auth/ProtectedRoute";
-import LoginPage from "./pages/LoginPage";
-import DashboardPage from "./pages/DashboardPage";
-import MediaPage from "./pages/MediaPage";
-import NewsPage from "./pages/NewsPage";
-import ActivitiesPage from "./pages/ActivitiesPage";
-import ImpactStatisticsPage from "./pages/ImpactStatisticsPage";
-import ContactInquiriesPage from "./pages/ContactInquiriesPage";
-import ResearchPage from "./pages/ResearchPage";
-import SettingsPage from "./pages/SettingsPage";
+import useLanguageStore from "./store/useLanguageStore";
+
+// Lazy-loaded Public Pages
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Activities = lazy(() => import("./pages/Activities"));
+const ActivityDetailsPage = lazy(() => import("./pages/ActivityDetailsPage"));
+const Research = lazy(() => import("./pages/Research"));
+const News = lazy(() => import("./pages/News"));
+
+// Lazy-loaded Admin Pages
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const DashboardPage = lazy(() => import("./pages/DashboardPage"));
+const MediaPage = lazy(() => import("./pages/MediaPage"));
+const NewsPage = lazy(() => import("./pages/NewsPage"));
+const ActivitiesPage = lazy(() => import("./pages/ActivitiesPage"));
+const ImpactStatisticsPage = lazy(() => import("./pages/ImpactStatisticsPage"));
+const ContactInquiriesPage = lazy(() => import("./pages/ContactInquiriesPage"));
+const ResearchPage = lazy(() => import("./pages/ResearchPage"));
+const SettingsPage = lazy(() => import("./pages/SettingsPage"));
 
 const queryClient = new QueryClient();
+
+function PageLoader() {
+  return (
+    <div className="flex min-h-[50vh] items-center justify-center">
+      <div
+        className="h-10 w-10 animate-spin rounded-full border-4 border-[#C8EBCE] border-t-[#0D3B2E]"
+        role="status"
+        aria-label="جاري التحميل..."
+      />
+    </div>
+  );
+}
 
 function App() {
   const language = useLanguageStore((state) => state.language);
@@ -39,45 +55,45 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-      
-        <Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route element={<RootLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/activities" element={<Activities />} />
+              <Route path="/activities/:id" element={<ActivityDetailsPage />} />
+              <Route path="/research" element={<Research />} />
+              <Route path="/news" element={<News />} />
+            </Route>
 
-          <Route element={<RootLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/activities" element={<Activities />} />
-            <Route path="/activities/:id" element={<ActivityDetailsPage />} />
-            <Route path="/research" element={<Research />} />
-            <Route path="/news" element={<News />} />
-          </Route>
+            <Route path="/admin/login" element={<LoginPage />} />
 
-          <Route path="/admin/login" element={<LoginPage />} />
-
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute>
-                <AdminLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<DashboardPage />} />
-            <Route path="activities" element={<ActivitiesPage />} />
-            <Route path="impact-statistics" element={<ImpactStatisticsPage />} />
-            <Route path="contact-inquiries" element={<ContactInquiriesPage />} />
-            <Route path="media" element={<MediaPage />} />
-            <Route path="news" element={<NewsPage />} />
-            <Route path="research" element={<ResearchPage />} />
-            <Route path="settings" element={<SettingsPage />} />
-          </Route>
-        </Routes>
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <AdminLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<DashboardPage />} />
+              <Route path="activities" element={<ActivitiesPage />} />
+              <Route path="impact-statistics" element={<ImpactStatisticsPage />} />
+              <Route path="contact-inquiries" element={<ContactInquiriesPage />} />
+              <Route path="media" element={<MediaPage />} />
+              <Route path="news" element={<NewsPage />} />
+              <Route path="research" element={<ResearchPage />} />
+              <Route path="settings" element={<SettingsPage />} />
+            </Route>
+          </Routes>
+        </Suspense>
 
         <Toaster richColors position="top-right" />
       </BrowserRouter>
 
-      <ReactQueryDevtools initialIsOpen={false} />
+      {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
   );
 }
 
-export default App;
+export default App;

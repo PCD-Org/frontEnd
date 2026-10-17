@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import SEO from "../components/common/SEO";
 import {
   ArrowLeft,
   ArrowRight,
@@ -71,7 +72,9 @@ export default function ActivityDetailsPage() {
   // SKELETON STATE
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-[#FBFBFA] py-12">
+      <>
+        <SEO title="جاري التحميل..." description="جاري تحميل تفاصيل النشاط..." />
+        <main className="min-h-screen bg-[#FBFBFA] py-12">
         <div className="mx-auto max-w-5xl px-5">
           {/* Breadcrumb Skeleton */}
           <div className="mb-8 flex items-center gap-3">
@@ -105,6 +108,7 @@ export default function ActivityDetailsPage() {
           </div>
         </div>
       </main>
+      </>
     );
   }
 
@@ -112,7 +116,9 @@ export default function ActivityDetailsPage() {
   const is404 = error?.response?.status === 404 || (!isLoading && !activity);
   if (is404) {
     return (
-      <main className="flex min-h-[70vh] items-center justify-center bg-[#FBFBFA] px-5 py-16">
+      <>
+        <SEO title="النشاط غير موجود" noindex={true} />
+        <main className="flex min-h-[70vh] items-center justify-center bg-[#FBFBFA] px-5 py-16">
         <div className="max-w-md text-center">
           <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-amber-50 text-amber-600">
             <FileQuestion size={40} aria-hidden="true" />
@@ -134,13 +140,16 @@ export default function ActivityDetailsPage() {
           </div>
         </div>
       </main>
+      </>
     );
   }
 
   // ERROR STATE
   if (isError) {
     return (
-      <main className="flex min-h-[70vh] items-center justify-center bg-[#FBFBFA] px-5 py-16">
+      <>
+        <SEO title="خطأ في تحميل النشاط" noindex={true} />
+        <main className="flex min-h-[70vh] items-center justify-center bg-[#FBFBFA] px-5 py-16">
         <div className="max-w-md rounded-2xl border border-red-100 bg-white p-8 text-center shadow-sm">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-50 text-red-600">
             <AlertTriangle size={32} aria-hidden="true" />
@@ -169,6 +178,7 @@ export default function ActivityDetailsPage() {
           </div>
         </div>
       </main>
+      </>
     );
   }
 
@@ -209,7 +219,19 @@ export default function ActivityDetailsPage() {
     .slice(0, 3);
 
   return (
-    <main className="min-h-screen bg-[#FBFBFA] py-10 lg:py-16">
+    <>
+      <SEO
+        title={displayTitle || "تفاصيل النشاط"}
+        description={
+          displayDescription
+            ? displayDescription.replace(/\r?\n+/g, " ").slice(0, 160)
+            : "تفاصيل نشاط من أنشطة المركز الفلسطيني للديمقراطية وحل النزاعات (PCED)"
+        }
+        canonical={`https://www.pcedpal.org/activities/${id}`}
+        image={currentImage || "/favicon.svg"}
+        type="article"
+      />
+      <main className="min-h-screen bg-[#FBFBFA] py-10 lg:py-16">
       <div className="mx-auto max-w-5xl px-5">
         {/* Top Navigation & Breadcrumb */}
         <nav aria-label="Breadcrumb" className="mb-8 flex flex-wrap items-center justify-between gap-4">
@@ -423,5 +445,6 @@ export default function ActivityDetailsPage() {
         )}
       </div>
     </main>
+    </>
   );
 }

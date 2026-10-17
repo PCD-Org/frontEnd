@@ -1,3 +1,4 @@
+import SEO from "../components/common/SEO";
 import { PageHeader } from "../components/ui/PageHeader";
 import { SectionTitle } from "../components/ui/SectionTitle";
 import { Container } from "../components/ui/Container";
@@ -66,7 +67,14 @@ function About() {
   ];
 
   return (
-    <main dir="rtl" className="w-full overflow-hidden">
+    <>
+      <SEO
+        title="من نحن"
+        description="تعرف على رؤية ورسالة وأهداف المركز الفلسطيني للديمقراطية وحل النزاعات (PCED)، وتاريخنا في خدمة المجتمع الفلسطيني وتعزيز التماسك الاجتماعي والسلم الأهلي."
+        canonical="https://www.pcedpal.org/about"
+      />
+      <main dir="rtl" className="w-full overflow-hidden">
+
       {/* =====================================================
           PAGE TITLE / BREADCRUMB
       ===================================================== */}
@@ -244,6 +252,7 @@ function About() {
         </div>
       </section>
     </main>
+    </>
   );
 }
 

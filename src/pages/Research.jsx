@@ -1,3 +1,4 @@
+import SEO from "../components/common/SEO";
 import { motion } from "motion/react";
 import {
   Archive,
@@ -13,9 +14,15 @@ import { useTranslation } from "../utils/useTranslation";
 const Research = () => {
   const { t, dir } = useTranslation();
   return (
-    <main
-      className="min-h-screen bg-[#FAF9F8] text-[#001809]"
-    >
+    <>
+      <SEO
+        title="البحث والدراسات"
+        description="مركز الأبحاث والدراسات وقواعد البيانات للمركز الفلسطيني للديمقراطية وحل النزاعات (PCED): أبحاث متخصصة، استطلاعات رأي، وأوراق سياسات لتعزيز المعرفة المجتمعية."
+        canonical="https://www.pcedpal.org/research"
+      />
+      <main
+        className="min-h-screen bg-[#FAF9F8] text-[#001809]"
+      >
       {/* =====================================================
           HERO
       ====================================================== */}
@@ -477,6 +484,7 @@ const Research = () => {
         </div>
       </section>
     </main>
+    </>
   );
 };
 

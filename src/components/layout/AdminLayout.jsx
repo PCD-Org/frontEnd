@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import SEO from "../common/SEO";
 import AdminSidebar from "./AdminSidebar";
 import AdminHeader from "./AdminHeader";
 
@@ -8,6 +9,7 @@ export default function AdminLayout() {
 
   return (
     <div className="min-h-screen bg-surface text-[#001809]">
+      <SEO title="لوحة التحكم" noindex={true} />
       <AdminSidebar />
 
       {sidebarOpen && (

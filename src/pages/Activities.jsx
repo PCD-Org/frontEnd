@@ -1,10 +1,11 @@
 import { useState } from "react";
+import SEO from "../components/common/SEO";
 import { PageHeader } from "../components/ui/PageHeader";
 import CategoryFilter from "../components/CategoryFilter";
 import ActivityCard from "../components/ActivityCard";
 import ActivityCardSkeleton from "../components/ActivityCardSkeleton";
 import { categories } from "../activitiesData";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { useTranslation } from "../utils/useTranslation";
 import { useActivities } from "../features/activities/useActivities";
 import { AlertTriangle, CalendarX, RotateCcw } from "lucide-react";
@@ -32,7 +33,12 @@ export default function Activities() {
         });
 
   return (
-    <div className="min-h-screen bg-[#FBFBFA]">
+    <section className="min-h-screen bg-[#FBFBFA]">
+      <SEO
+        title="الأنشطة والمشاريع"
+        description="استعرض أحدث أنشطة ومشاريع المركز الفلسطيني للديمقراطية وحل النزاعات (PCED) في التمكين المجتمعي، الدعم النفسي والاجتماعي، وحل النزاعات."
+        canonical="https://www.pcedpal.org/activities"
+      />
       <PageHeader
         variant="dark"
         title={t("activitiesPage.title")}
@@ -134,6 +140,7 @@ export default function Activities() {
           </motion.div>
         )}
       </div>
-    </div>
+    </section>
   );
 }
+
