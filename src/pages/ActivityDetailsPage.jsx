@@ -228,7 +228,7 @@ export default function ActivityDetailsPage() {
             : "تفاصيل نشاط من أنشطة المركز الفلسطيني للديمقراطية وحل النزاعات (PCED)"
         }
         canonical={`https://www.pcedpal.org/activities/${id}`}
-        image={currentImage || "/favicon.svg"}
+        image={currentImage || "/favicon.png"}
         type="article"
       />
       <main className="min-h-screen bg-[#FBFBFA] py-10 lg:py-16">

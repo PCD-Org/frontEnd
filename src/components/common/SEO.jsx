@@ -10,7 +10,7 @@ export default function SEO({
   description,
   canonical,
   noindex = false,
-  image = `${BASE_DOMAIN}/favicon.svg`,
+  image = `${BASE_DOMAIN}/favicon.png`,
   type = "website",
 }) {
   const brandSuffix = "المركز الفلسطيني للديمقراطية وحل النزاعات (PCED)";
@@ -23,7 +23,7 @@ export default function SEO({
     ? image.startsWith("http")
       ? image
       : `${BASE_DOMAIN}${image.startsWith("/") ? "" : "/"}${image}`
-    : `${BASE_DOMAIN}/favicon.svg`;
+    : `${BASE_DOMAIN}/favicon.png`;
 
   const pageUrl = canonical || BASE_DOMAIN;
 
