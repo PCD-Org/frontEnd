@@ -225,7 +225,7 @@ export default function ActivityDetailsPage() {
         description={
           displayDescription
             ? displayDescription.replace(/\r?\n+/g, " ").slice(0, 160)
-            : "تفاصيل نشاط من أنشطة المركز الفلسطيني للديمقراطية وحل النزاعات (PCED)"
+            : "تفاصيل نشاط من أنشطة الهيئة الأهلية الفلسطينية للبيئة والتنمية والتطوير (PCED)"
         }
         canonical={`https://www.pcedpal.org/activities/${id}`}
         image={currentImage || "/favicon.png"}

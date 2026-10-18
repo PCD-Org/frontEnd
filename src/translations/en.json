@@ -68,7 +68,7 @@
   "activities.3.desc": "Emergency food aid distribution to affected families in Gaza to strengthen their resilience and meet their basic needs.",
 
   "activitiesPage.title": "Support & Assistance Programs",
-  "activitiesPage.desc": "At the Palestinian Center for Environmental Development, we believe that resilience begins with empowering the community. Our programs include urgent and sustainable interventions to strengthen our people's ability to face environmental and social challenges through thoughtful development and direct support.",
+  "activitiesPage.desc": "At the Palestinian Civil Entity for Environment, Development & Enhancement (PCED), we believe that resilience begins with empowering the community. Our programs include urgent and sustainable interventions to strengthen our people's ability to face environmental and social challenges through thoughtful development and direct support.",
   "activitiesPage.breadcrumb": "Activities",
   "activitiesPage.errorTitle": "Failed to Load Activities",
   "activitiesPage.errorMessage": "An error occurred while fetching activities from the server. Please try again.",
@@ -90,10 +90,10 @@
   "about.heroTitle1": "Our Roots in Academic",
   "about.heroTitle2": "Excellence",
   "about.heroDesc": "We are a leading institution dedicated to promoting environmental development in Palestine through specialized scientific research and fieldwork committed to global sustainability standards.",
-  "about.imageBadge": "Center Founded 2023",
+  "about.imageBadge": "Entity Founded 2023",
   "about.storyLabel": "Our history",
   "about.storyTitle": "Academic Excellence for a Green Future",
-  "about.storyDesc1": "The Palestinian Center for Environmental Development (PCED) was established in 2023, at the initiative of a group of academic staff and researchers specializing in environmental science and sustainable development.",
+  "about.storyDesc1": "The Palestinian Civil Entity for Environment, Development & Enhancement (PCED) was established in 2023, at the initiative of an elite group of academic staff and researchers specializing in environmental science and sustainable development.",
   "about.storyDesc2": "The establishment came in response to the growing environmental challenges in the region, and to provide a national scientific platform that contributes to the formulation of environmental policies based on evidence and facts, with a focus on protecting Palestinian natural resources and empowering local communities.",
   "about.empowermentTitle": "Empowerment",
   "about.empowermentDesc": "We empower local communities and enhance their participation in environmental protection and decision-making.",
@@ -117,13 +117,13 @@
   "about.joinButton": "Browse our research",
 
   "news.title": "Research & Studies",
-  "news.desc": "At the Palestinian Center for Environmental Development, we are committed to providing a robust scientific database...",
+  "news.desc": "At the Palestinian Civil Entity for Environment, Development & Enhancement (PCED), we are committed to providing reliable scientific information and publishing updates on our field projects in Palestine.",
   "news.breadcrumb": "Research & Studies",
 
   "research.breadcrumbHome": "Home",
   "research.breadcrumbCurrent": "Research & Studies",
   "research.heroTitle": "Research & Studies",
-  "research.heroDesc": "At the Palestinian Center for Environmental Development, we are committed to providing a robust scientific database that supports biodiversity conservation and sustainable development efforts in Palestine. Our research bridges traditional inherited knowledge and modern technologies.",
+  "research.heroDesc": "At the Palestinian Civil Entity for Environment, Development & Enhancement (PCED), we are committed to providing a robust scientific database that supports biodiversity conservation and sustainable development efforts in Palestine. Our research bridges traditional inherited knowledge and modern technologies.",
   "research.dbTitle": "Database Update",
   "research.dbDesc": "We are currently updating the research and scientific studies database to provide the best knowledge resources. The updated version will be launched soon to include field reports, academic studies, and specialized environmental policy papers.",
   "research.feature1.title": "Digital Archive",
@@ -388,5 +388,11 @@
   "admin.inquiries.statusUpdated": "Inquiry status updated successfully.",
   "admin.inquiries.empty": "No inquiries yet",
   "admin.inquiries.emptyHint": "No inquiries received yet.",
-  "admin.inquiries.demoNote": "Inquiries are stored locally until the API is connected."
+  "admin.inquiries.demoNote": "Inquiries are stored locally until the API is connected.",
+
+  "notFound.badge": "Error 404",
+  "notFound.title": "Page Not Found",
+  "notFound.desc": "Sorry, the page you are looking for does not exist, has been removed, or the URL is incorrect.",
+  "notFound.backHome": "Back to Home",
+  "notFound.exploreActivities": "Explore Activities"
 }

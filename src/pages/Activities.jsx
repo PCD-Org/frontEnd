@@ -36,7 +36,7 @@ export default function Activities() {
     <section className="min-h-screen bg-[#FBFBFA]">
       <SEO
         title="الأنشطة والمشاريع"
-        description="استعرض أحدث أنشطة ومشاريع المركز الفلسطيني للديمقراطية وحل النزاعات (PCED) في التمكين المجتمعي، الدعم النفسي والاجتماعي، وحل النزاعات."
+        description="استعرض أحدث أنشطة ومشاريع الهيئة الأهلية الفلسطينية للبيئة والتنمية والتطوير (PCED) في حماية البيئة، الإغاثة، التنمية المستدامة، والتمكين المجتمعي."
         canonical="https://www.pcedpal.org/activities"
       />
       <PageHeader

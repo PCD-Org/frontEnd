@@ -16,6 +16,7 @@ const Activities = lazy(() => import("./pages/Activities"));
 const ActivityDetailsPage = lazy(() => import("./pages/ActivityDetailsPage"));
 const Research = lazy(() => import("./pages/Research"));
 const News = lazy(() => import("./pages/News"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Lazy-loaded Admin Pages
 const LoginPage = lazy(() => import("./pages/LoginPage"));
@@ -64,6 +65,7 @@ function App() {
               <Route path="/activities/:id" element={<ActivityDetailsPage />} />
               <Route path="/research" element={<Research />} />
               <Route path="/news" element={<News />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
 
             <Route path="/admin/login" element={<LoginPage />} />

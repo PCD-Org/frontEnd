@@ -10,20 +10,20 @@ export default function SEO({
   description,
   canonical,
   noindex = false,
-  image = `${BASE_DOMAIN}/favicon.png`,
+  image = `${BASE_DOMAIN}/og-image.png`,
   type = "website",
 }) {
-  const brandSuffix = "المركز الفلسطيني للديمقراطية وحل النزاعات (PCED)";
+  const brandSuffix = "الهيئة الأهلية الفلسطينية للبيئة والتنمية والتطوير | PCED";
   const fullTitle = title ? `${title} | PCED` : brandSuffix;
   const metaDescription =
     description ||
-    "المركز الفلسطيني للديمقراطية وحل النزاعات (PCED) - منظمة أهلية فلسطينية غير ربحية تسعى لتعزيز السلم الأهلي وسيادة القانون وتمكين الفئات الهشة وحل النزاعات المجتمعية.";
+    "الهيئة الأهلية الفلسطينية للبيئة والتنمية والتطوير (PCED) - منظمة أهلية فلسطينية مستقلة تُعنى بحماية البيئة، وتعزيز التنمية المستدامة، والتمكين المجتمعي، والبحث العلمي التطبيقي في فلسطين.";
 
   const fullImage = image
     ? image.startsWith("http")
       ? image
       : `${BASE_DOMAIN}${image.startsWith("/") ? "" : "/"}${image}`
-    : `${BASE_DOMAIN}/favicon.png`;
+    : `${BASE_DOMAIN}/og-image.png`;
 
   const pageUrl = canonical || BASE_DOMAIN;
 
@@ -35,13 +35,19 @@ export default function SEO({
       {/* Canonical URL */}
       <link rel="canonical" href={pageUrl} />
 
-      {/* Robots meta tag for Admin and non-indexable routes */}
-      {noindex && <meta name="robots" content="noindex, nofollow" />}
+      {/* Robots meta tag */}
+      {noindex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <meta name="robots" content="index, follow" />
+      )}
 
       {/* Open Graph Tags */}
+      <meta property="og:site_name" content={brandSuffix} />
+      <meta property="og:locale" content="ar_AR" />
+      <meta property="og:type" content={type} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={metaDescription} />
-      <meta property="og:type" content={type} />
       <meta property="og:url" content={pageUrl} />
       {fullImage && <meta property="og:image" content={fullImage} />}
 
