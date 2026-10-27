@@ -33,4 +33,5 @@ export const categories = [
   { nameKey: "categories.psycho", slug: "psycho" },
   { nameKey: "categories.development", slug: "development" },
   { nameKey: "categories.workshops", slug: "workshops" },
+  { nameKey: "categories.events", slug: "events" },
 ];

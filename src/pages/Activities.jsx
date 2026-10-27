@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useTranslation } from "../utils/useTranslation";
 import { useActivities } from "../features/activities/useActivities";
 import { AlertTriangle, CalendarX, RotateCcw } from "lucide-react";
+import { isSpecialEventActivity } from "../utils/eventClassifier";
 
 export default function Activities() {
   const { t } = useTranslation();
@@ -18,6 +19,7 @@ export default function Activities() {
   const { data: activities = [], isLoading, isError, refetch, isFetching } = list;
 
   const safeActivities = Array.isArray(activities) ? activities : [];
+
   const filteredActivities =
     activeCategory === "all"
       ? safeActivities
@@ -26,6 +28,9 @@ export default function Activities() {
             typeof activity.category === "object"
               ? activity.category?.key
               : activity.category;
+          if (activeCategory === "events") {
+            return isSpecialEventActivity(activity);
+          }
           return (
             catKey === activeCategory ||
             (activeCategory === "psycho" && catKey === "psychosocial")

@@ -8,6 +8,7 @@ import { categories } from "../../activitiesData";
 import { useTranslation } from "../../utils/useTranslation";
 import { useActivities } from "../../features/activities/useActivities";
 import { AlertTriangle, CalendarX, RotateCcw } from "lucide-react";
+import { isSpecialEventActivity } from "../../utils/eventClassifier";
 
 const Activities = () => {
   const { t } = useTranslation();
@@ -26,6 +27,9 @@ const Activities = () => {
               typeof activity.category === "object"
                 ? activity.category?.key
                 : activity.category;
+            if (activeCategory === "events") {
+              return isSpecialEventActivity(activity);
+            }
             return (
               catKey === activeCategory ||
               (activeCategory === "psycho" && catKey === "psychosocial")

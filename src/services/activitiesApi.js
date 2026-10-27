@@ -2,6 +2,7 @@ import api from "../utils/api";
 import { API_MODE } from "../utils/api";
 import { withDelay } from "../utils/mock";
 import { activitiesStore } from "../features/activities/mockActivities";
+import { isSpecialEventActivity } from "../utils/eventClassifier";
 
 const endpoint = "/activities";
 
@@ -67,11 +68,26 @@ export const normalizeActivity = (raw) => {
       ? raw.description?.en || ""
       : raw.descriptionEn || "";
 
+  const isEvent =
+    categoryKey === "events" ||
+    categoryKey === "special-events" ||
+    isSpecialEventActivity({
+      category: categoryKey,
+      titleAr,
+      titleEn,
+    });
+
+  const finalCategory = isEvent
+    ? "events"
+    : categoryKey === "psycho"
+    ? "psychosocial"
+    : categoryKey || raw.category || "development";
+
   return {
     ...raw,
     id,
     _id: id,
-    category: categoryKey || raw.category || "development",
+    category: finalCategory,
     rawCategory: raw.category,
     images: finalImages,
     coverImage: coverImageUrl,
@@ -175,10 +191,28 @@ const buildActivityFormData = (payload) => {
 };
 
 export const activitiesApi = {
-  async getAll(params) {
+  async getAll(params = {}) {
     if (isMock()) return withDelay(activitiesStore.list().map(normalizeActivity));
-    const { data } = await api.get(endpoint, { params });
-    const rawList = Array.isArray(data)
+
+    // If caller specified page or limit explicitly, respect that
+    if (params && (params.page !== undefined || params.limit !== undefined)) {
+      const { data } = await api.get(endpoint, { params });
+      const rawList = Array.isArray(data)
+        ? data
+        : Array.isArray(data?.data?.activities)
+        ? data.data.activities
+        : Array.isArray(data?.data)
+        ? data.data
+        : Array.isArray(data?.activities)
+        ? data.activities
+        : [];
+      return rawList.map(normalizeActivity);
+    }
+
+    // Default to limit=100 (backend maximum limit) to fetch all activities
+    const queryParams = { limit: 100, ...params };
+    const { data } = await api.get(endpoint, { params: queryParams });
+    let rawList = Array.isArray(data)
       ? data
       : Array.isArray(data?.data?.activities)
       ? data.data.activities
@@ -187,6 +221,32 @@ export const activitiesApi = {
       : Array.isArray(data?.activities)
       ? data.activities
       : [];
+
+    // If totalPages > 1, fetch remaining pages concurrently so all activities are loaded
+    const totalPages = data?.pagination?.totalPages;
+    if (totalPages && totalPages > 1) {
+      const pagePromises = [];
+      for (let p = 2; p <= totalPages; p++) {
+        pagePromises.push(
+          api.get(endpoint, { params: { ...queryParams, page: p } })
+        );
+      }
+      const pageResponses = await Promise.all(pagePromises);
+      for (const res of pageResponses) {
+        const pageData = res?.data;
+        const pageItems = Array.isArray(pageData)
+          ? pageData
+          : Array.isArray(pageData?.data?.activities)
+          ? pageData.data.activities
+          : Array.isArray(pageData?.data)
+          ? pageData.data
+          : Array.isArray(pageData?.activities)
+          ? pageData.activities
+          : [];
+        rawList = rawList.concat(pageItems);
+      }
+    }
+
     return rawList.map(normalizeActivity);
   },
 

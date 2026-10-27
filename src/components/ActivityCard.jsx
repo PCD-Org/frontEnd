@@ -2,12 +2,15 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Calendar } from "lucide-react";
 import { useTranslation } from "../utils/useTranslation";
 import ActivityImage from "./ui/ActivityImage";
+import { isSpecialEventActivity } from "../utils/eventClassifier";
 
 const categoryColors = {
   workshops: "bg-red-100 text-red-700",
   psycho: "bg-green-100 text-green-700",
+  psychosocial: "bg-green-100 text-green-700",
   relief: "bg-blue-100 text-blue-700",
   development: "bg-amber-100 text-amber-800",
+  events: "bg-rose-100 text-rose-700",
 };
 
 export default function ActivityCard({
@@ -52,16 +55,46 @@ export default function ActivityCard({
         : description
       : "";
 
-  const categoryLabel = category
-    ? t(`activities.cat.${category}`) !== `activities.cat.${category}`
-      ? t(`activities.cat.${category}`)
-      : t(`categories.${category}`) !== `categories.${category}`
-      ? t(`categories.${category}`)
-      : category
-    : "";
+  const categoryKey =
+    typeof category === "object" && category !== null
+      ? category.key || category.name?.en?.toLowerCase() || ""
+      : typeof category === "string"
+      ? category
+      : "";
+
+  const isEvent =
+    categoryKey === "events" ||
+    isSpecialEventActivity({
+      category: categoryKey,
+      title,
+      titleAr: typeof title === "object" ? title.ar : title,
+      titleEn: typeof title === "object" ? title.en : "",
+    });
+
+  const normCat = isEvent
+    ? "events"
+    : categoryKey === "psycho"
+    ? "psychosocial"
+    : categoryKey;
+
+  const categoryLabel =
+    (normCat === "events"
+      ? language === "ar"
+        ? "فعاليات ومناسبات"
+        : "Events & Occasions"
+      : typeof category === "object" && category !== null && category.name?.[language]) ||
+    (normCat && t(`activities.cat.${normCat}`) !== `activities.cat.${normCat}`
+      ? t(`activities.cat.${normCat}`)
+      : normCat && t(`categories.${normCat}`) !== `categories.${normCat}`
+      ? t(`categories.${normCat}`)
+      : normCat === "psychosocial" || normCat === "psycho"
+      ? language === "ar"
+        ? "الدعم النفسي"
+        : "Psychological Support"
+      : normCat || "");
 
   const badgeColor =
-    categoryColors[category] || "bg-[#E6F4EA] text-[#0D3B2E]";
+    categoryColors[normCat] || categoryColors[categoryKey] || "bg-[#E6F4EA] text-[#0D3B2E]";
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">

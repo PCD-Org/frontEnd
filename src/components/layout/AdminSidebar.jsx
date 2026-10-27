@@ -5,9 +5,6 @@ import {
   CalendarDays,
   BarChart3,
   Mail,
-  Images,
-  Newspaper,
-  BookOpen,
   Settings,
   LogOut,
   X,
@@ -20,9 +17,6 @@ const navItems = [
   { to: "/admin/activities", key: "admin.nav.activities", icon: CalendarDays, permission: "activities.read" },
   { to: "/admin/impact-statistics", key: "admin.nav.impactStats", icon: BarChart3 },
   { to: "/admin/contact-inquiries", key: "admin.nav.inquiries", icon: Mail },
-  { to: "/admin/media", key: "admin.nav.media", icon: Images, permission: "media.read" },
-  { to: "/admin/news", key: "admin.nav.news", icon: Newspaper, permission: "news.read" },
-  { to: "/admin/research", key: "admin.nav.research", icon: BookOpen, permission: "research.read" },
   { to: "/admin/settings", key: "admin.nav.settings", icon: Settings },
 ];
 

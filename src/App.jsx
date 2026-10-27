@@ -21,12 +21,9 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 // Lazy-loaded Admin Pages
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const DashboardPage = lazy(() => import("./pages/DashboardPage"));
-const MediaPage = lazy(() => import("./pages/MediaPage"));
-const NewsPage = lazy(() => import("./pages/NewsPage"));
 const ActivitiesPage = lazy(() => import("./pages/ActivitiesPage"));
 const ImpactStatisticsPage = lazy(() => import("./pages/ImpactStatisticsPage"));
 const ContactInquiriesPage = lazy(() => import("./pages/ContactInquiriesPage"));
-const ResearchPage = lazy(() => import("./pages/ResearchPage"));
 const SettingsPage = lazy(() => import("./pages/SettingsPage"));
 
 const queryClient = new QueryClient();
@@ -82,9 +79,6 @@ function App() {
               <Route path="activities" element={<ActivitiesPage />} />
               <Route path="impact-statistics" element={<ImpactStatisticsPage />} />
               <Route path="contact-inquiries" element={<ContactInquiriesPage />} />
-              <Route path="media" element={<MediaPage />} />
-              <Route path="news" element={<NewsPage />} />
-              <Route path="research" element={<ResearchPage />} />
               <Route path="settings" element={<SettingsPage />} />
             </Route>
           </Routes>

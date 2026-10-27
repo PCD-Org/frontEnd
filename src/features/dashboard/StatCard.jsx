@@ -4,9 +4,6 @@ import {
   BarChart3,
   Mail,
   MessageSquare,
-  Images,
-  Newspaper,
-  BookOpen,
   ArrowUpRight,
 } from "lucide-react";
 
@@ -15,9 +12,6 @@ const toneMap = {
   impactStats: "bg-[#EFE8F4] text-[#5B3A6E]",
   inquiries: "bg-mint text-primary-dark",
   newInquiries: "bg-[#FBE8E8] text-[#C53030]",
-  media: "bg-mint text-primary-dark",
-  news: "bg-[#F3E8D8] text-[#79552C]",
-  research: "bg-[#EFE8F4] text-[#5B3A6E]",
 };
 
 const iconMap = {
@@ -25,9 +19,6 @@ const iconMap = {
   impactStats: BarChart3,
   inquiries: Mail,
   newInquiries: MessageSquare,
-  media: Images,
-  news: Newspaper,
-  research: BookOpen,
 };
 
 const hrefMap = {
@@ -35,9 +26,6 @@ const hrefMap = {
   impactStats: "/admin/impact-statistics",
   inquiries: "/admin/contact-inquiries",
   newInquiries: "/admin/contact-inquiries",
-  media: "/admin/media",
-  news: "/admin/news",
-  research: "/admin/research",
 };
 
 export default function StatCard({ label, value, type, loading }) {

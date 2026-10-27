@@ -20,12 +20,15 @@ import { useTranslation } from "../utils/useTranslation";
 import { useActivity, useActivities } from "../features/activities/useActivities";
 import ActivityCard from "../components/ActivityCard";
 import ActivityImage from "../components/ui/ActivityImage";
+import { isSpecialEventActivity } from "../utils/eventClassifier";
 
 const categoryColors = {
   workshops: "bg-red-100 text-red-800 border-red-200",
   psycho: "bg-green-100 text-green-800 border-green-200",
+  psychosocial: "bg-green-100 text-green-800 border-green-200",
   relief: "bg-blue-100 text-blue-800 border-blue-200",
   development: "bg-amber-100 text-amber-800 border-amber-200",
+  events: "bg-rose-100 text-rose-800 border-rose-200",
 };
 
 export default function ActivityDetailsPage() {
@@ -186,16 +189,35 @@ export default function ActivityDetailsPage() {
   const displayTitle = getLocalized(activity.title, activity.titleKey);
   const displayDescription = getLocalized(activity.description || activity.summary, activity.descriptionKey);
 
-  const categorySlug = activity.category;
-  const categoryLabel = categorySlug
-    ? t(`activities.cat.${categorySlug}`) !== `activities.cat.${categorySlug}`
-      ? t(`activities.cat.${categorySlug}`)
-      : t(`categories.${categorySlug}`) !== `categories.${categorySlug}`
-      ? t(`categories.${categorySlug}`)
-      : categorySlug
-    : "";
+  const rawCat = typeof activity.category === "object" ? activity.category?.key : activity.category;
+  const isEvent =
+    rawCat === "events" ||
+    isSpecialEventActivity(activity);
 
-  const badgeStyle = categoryColors[categorySlug] || "bg-[#E6F4EA] text-[#0D3B2E] border-transparent";
+  const categorySlug = isEvent
+    ? "events"
+    : rawCat === "psycho"
+    ? "psychosocial"
+    : rawCat;
+
+  const categoryLabel =
+    (categorySlug === "events"
+      ? language === "ar"
+        ? "فعاليات ومناسبات"
+        : "Events & Occasions"
+      : typeof activity.category === "object" && activity.category?.name?.[language]) ||
+    (categorySlug && t(`activities.cat.${categorySlug}`) !== `activities.cat.${categorySlug}`
+      ? t(`activities.cat.${categorySlug}`)
+      : categorySlug && t(`categories.${categorySlug}`) !== `categories.${categorySlug}`
+      ? t(`categories.${categorySlug}`)
+      : categorySlug === "psychosocial" || categorySlug === "psycho"
+      ? language === "ar"
+        ? "الدعم النفسي"
+        : "Psychological Support"
+      : categorySlug || "");
+
+  const badgeStyle =
+    categoryColors[categorySlug] || categoryColors[rawCat] || "bg-[#E6F4EA] text-[#0D3B2E] border-transparent";
 
   // Gather all images (new schema images array or fallback to coverImage/image)
   const allImages =

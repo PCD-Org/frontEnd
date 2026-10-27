@@ -4,7 +4,7 @@ export const ROLES = {
   EDITOR: "editor",
 };
 
-const RESOURCES = ["media", "news", "activities", "research", "impact-statistics", "inquiries"];
+const RESOURCES = ["activities", "impact-statistics", "inquiries"];
 const ACTIONS = ["read", "create", "update", "delete"];
 
 export const ALL_PERMISSIONS = RESOURCES.flatMap((resource) =>

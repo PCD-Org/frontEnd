@@ -53,12 +53,21 @@
   "categories.all": "الكل",
   "categories.relief": "مشاريع إغاثية",
   "categories.psycho": "الدعم النفسي",
+  "categories.psychosocial": "الدعم النفسي",
   "categories.development": "تنموية",
   "categories.workshops": "ورشات عمل",
+  "categories.events": "فعاليات ومناسبات",
 
   "activities.cat.workshops": "ورشات",
-  "activities.cat.psycho": "دعم نفسي",
+  "activities.cat.psycho": "الدعم النفسي",
+  "activities.cat.psychosocial": "الدعم النفسي",
   "activities.cat.relief": "إغاثة",
+  "activities.cat.events": "فعاليات ومناسبات",
+
+  "activitiesPage.eventsSection.title": "فعاليات وأيام عالمية مميزة",
+  "activitiesPage.eventsSection.subtitle": "تسليط الضوء على مبادرات وفعاليات الهيئة في الأيام الدولية والمناسبات التوعوية مثل أكتوبر الوردي واليوم العالمي للأغذية",
+  "activitiesPage.eventsSection.badge": "مناسبات وأيام خاصة",
+  "activitiesPage.eventsSection.viewAll": "استعراض كل الفعاليات",
 
   "activities.1.title": "جلسة حوارية حول واقع التعليم والتنمية في غزة",
   "activities.1.desc": "مشاركة خبراء وأكاديميين في وضع خارطة طريق لتحسين المنظومة التعليمية والبيئية في ظل التحديات الراهنة.",
@@ -301,9 +310,11 @@
   "admin.news.cat.general": "عام",
 
   "admin.activities.cat.relief": "إغاثة",
-  "admin.activities.cat.psycho": "دعم نفسي",
+  "admin.activities.cat.psycho": "الدعم النفسي",
+  "admin.activities.cat.psychosocial": "الدعم النفسي",
   "admin.activities.cat.workshops": "ورشات عمل",
   "admin.activities.cat.development": "تنموية",
+  "admin.activities.cat.events": "فعاليات ومناسبات",
 
   "admin.research.cat.biodiversity": "التنوع الحيوي",
   "admin.research.cat.foodSecurity": "الأمن الغذائي",

@@ -53,12 +53,21 @@
   "categories.all": "All",
   "categories.relief": "Relief Projects",
   "categories.psycho": "Psychological Support",
+  "categories.psychosocial": "Psychological Support",
   "categories.development": "Development",
   "categories.workshops": "Workshops",
+  "categories.events": "Events & Occasions",
 
   "activities.cat.workshops": "Workshops",
   "activities.cat.psycho": "Psychological Support",
+  "activities.cat.psychosocial": "Psychological Support",
   "activities.cat.relief": "Relief",
+  "activities.cat.events": "Events & Occasions",
+
+  "activitiesPage.eventsSection.title": "Special Events & Global Days",
+  "activitiesPage.eventsSection.subtitle": "Highlighting PCED's initiatives and campaigns on international days and awareness occasions such as Pink October and World Food Day",
+  "activitiesPage.eventsSection.badge": "Special Occasions",
+  "activitiesPage.eventsSection.viewAll": "View all events",
 
   "activities.1.title": "Discussion Session on Education & Development in Gaza",
   "activities.1.desc": "Participation of experts and academics in developing a roadmap to improve the educational and environmental system amid current challenges.",
@@ -302,8 +311,10 @@
 
   "admin.activities.cat.relief": "Relief",
   "admin.activities.cat.psycho": "Psychological Support",
+  "admin.activities.cat.psychosocial": "Psychological Support",
   "admin.activities.cat.workshops": "Workshops",
   "admin.activities.cat.development": "Development",
+  "admin.activities.cat.events": "Events & Occasions",
 
   "admin.research.cat.biodiversity": "Biodiversity",
   "admin.research.cat.foodSecurity": "Food Security",
