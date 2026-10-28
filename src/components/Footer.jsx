@@ -1,6 +1,38 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "../utils/useTranslation";
 
+const socialLinks = [
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/PCED0",
+    icon: (
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    )
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/p_c_e_d/",
+    icon: (
+      <>
+        <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+      </>
+    ),
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/the-palestinian-civil-commission-for-environment-and-development-pced",
+    icon: (
+      <>
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+        <rect width="4" height="12" x="2" y="9" />
+        <circle cx="4" cy="4" r="2" />
+      </>
+    ),
+  },
+];
+
 function Footer() {
   const { t } = useTranslation();
 
@@ -52,10 +84,10 @@ function Footer() {
             </p>
 
             {/* Social / Contact Icons */}
-            <div className="mt-5 flex items-center gap-4">
+            <div className="mt-5 flex flex-wrap items-center gap-4">
               {/* Email */}
               <a
-                href="mailto:admin@pced.io"
+                href="mailto:info@pcedpal.org"
                 aria-label="Email"
                 className="
                   text-[#76977E]
@@ -80,6 +112,38 @@ function Footer() {
                   <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                 </svg>
               </a>
+
+              {/* Social Links */}
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="
+                    text-[#76977E]
+                    transition-all
+                    duration-300
+                    hover:-translate-y-1
+                    hover:text-white
+                  "
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    {social.icon}
+                  </svg>
+                </a>
+              ))}
 
               {/* Share */}
               <button
@@ -308,30 +372,27 @@ function Footer() {
               {t("footer.contact")}
             </h3>
 
-            <div className="flex flex-col gap-4">
+            <div className="mx-auto flex w-fit flex-col gap-4 sm:mx-0">
               {/* Email */}
               <a
-                href="mailto:admin@pced.io"
+                href="mailto:info@pcedpal.org"
                 className="
                   flex
                   items-center
-                  justify-center
-                  gap-1
+                  gap-3
                   font-['Atkinson_Hyperlegible_Next']
                   text-sm
                   text-[#76977E]
                   transition-all
                   duration-300
                   hover:text-white
-                  sm:justify-start
                 "
               >
-                <span>admin@pced.io</span>
-
                 <svg
+                  className="shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
-                  width="17"
-                  height="17"
+                  width="18"
+                  height="18"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -342,31 +403,30 @@ function Footer() {
                   <rect width="20" height="16" x="2" y="4" rx="2" />
                   <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                 </svg>
+
+                <span dir="ltr">info@pcedpal.org</span>
               </a>
 
               {/* Phone */}
               <a
-                href="tel:+970598880877"
+                href="tel:+972599444371"
                 className="
                   flex
                   items-center
-                  justify-center
-                  gap-2
+                  gap-3
                   font-['Atkinson_Hyperlegible_Next']
                   text-sm
                   text-[#76977E]
                   transition-all
                   duration-300
                   hover:text-white
-                  sm:justify-start
                 "
               >
-                <span>+970 598 880 877</span>
-
                 <svg
+                  className="shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
-                  width="17"
-                  height="17"
+                  width="18"
+                  height="18"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -376,6 +436,8 @@ function Footer() {
                 >
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z" />
                 </svg>
+
+                <span dir="ltr">+972 599 444 371</span>
               </a>
 
               {/* Location */}
@@ -383,20 +445,17 @@ function Footer() {
                 className="
                   flex
                   items-center
-                  justify-center
-                  gap-2
+                  gap-3
                   font-['Atkinson_Hyperlegible_Next']
                   text-sm
                   text-[#76977E]
-                  sm:justify-start
                 "
               >
-                <span>{t("footer.location")}</span>
-
                 <svg
+                  className="shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
-                  width="17"
-                  height="17"
+                  width="18"
+                  height="18"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -407,6 +466,8 @@ function Footer() {
                   <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z" />
                   <circle cx="12" cy="10" r="3" />
                 </svg>
+
+                <span>دير البلح، قطاع غزة، فلسطين</span>
               </div>
             </div>
           </div>

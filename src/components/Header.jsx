@@ -201,8 +201,8 @@ export default function Header() {
               DONATE BUTTON
           ====================================================== */}
 
-          <button
-            type="button"
+          <Link
+            to="/donate"
             className="
               group
               relative
@@ -252,7 +252,7 @@ export default function Header() {
             <span className="relative z-10">
               {t("header.donate")}
             </span>
-          </button>
+          </Link>
 
           {/* =====================================================
               DESKTOP SEARCH
@@ -832,7 +832,12 @@ export default function Header() {
               >
                 {/* Mobile Donate */}
 
-                <button
+                <Link
+                  to="/donate"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setIsMobileLanguageOpen(false);
+                  }}
                   className="
                     flex
                     flex-1
@@ -855,7 +860,7 @@ export default function Header() {
                   "
                 >
                   {t("header.donate")}
-                </button>
+                </Link>
               </div>
             </nav>
           </motion.div>
