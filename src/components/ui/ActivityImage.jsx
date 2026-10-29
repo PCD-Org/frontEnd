@@ -2,6 +2,13 @@ import { useState } from "react";
 import orgLogo from "../../assets/Logo.png";
 import { useTranslation } from "../../utils/useTranslation";
 
+/**
+ * fit:
+ *  - "cover"   : يملأ الحاوية ويقص الزوائد (السلوك القديم، الافتراضي)
+ *  - "contain" : يعرض الصورة كاملة بدون قص
+ *  - "blur"    : يعرض الصورة كاملة فوق خلفية ضبابية من نفس الصورة
+ *                (الأنسب للصور الطويلة والعريضة)
+ */
 export default function ActivityImage({
   src,
   alt = "",
@@ -9,6 +16,7 @@ export default function ActivityImage({
   containerClassName = "",
   fallbackClassName = "",
   loading = "lazy",
+  fit = "cover",
 }) {
   const { t } = useTranslation();
   const rawUrl =
@@ -34,13 +42,24 @@ export default function ActivityImage({
     );
   }
 
+  const objectFit = fit === "cover" ? "object-cover" : "object-contain";
+
   return (
-    <div className={`overflow-hidden ${containerClassName}`}>
+    <div className={`relative overflow-hidden ${containerClassName}`}>
+      {fit === "blur" && (
+        <img
+          src={rawUrl}
+          alt=""
+          aria-hidden="true"
+          loading={loading}
+          className="absolute inset-0 h-full w-full scale-125 object-cover opacity-70 blur-2xl"
+        />
+      )}
       <img
         src={rawUrl}
         alt={alt || t("admin.nav.activities") || "Activity"}
         onError={() => setFailedUrl(rawUrl)}
-        className={`h-full w-full object-cover transition-transform duration-300 ${className}`}
+        className={`relative h-full w-full ${objectFit} transition-transform duration-300 ${className}`}
         loading={loading}
       />
     </div>

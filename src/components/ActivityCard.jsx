@@ -102,13 +102,14 @@ export default function ActivityCard({
         to={targetLink}
         className="flex flex-1 flex-col outline-none focus-visible:ring-2 focus-visible:ring-[#0D3B2E] rounded-2xl"
       >
-        {/* Image Container */}
-        <div className="relative h-56 w-full overflow-hidden bg-gray-100">
+        {/* Image Container: نسبة ثابتة لكل الكروت، والصورة تظهر كاملة */}
+        <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100">
           <ActivityImage
             src={resolvedImage}
             alt={displayTitle || "Activity"}
+            fit="blur"
             containerClassName="h-full w-full"
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="transition-transform duration-500 group-hover:scale-[1.03]"
             fallbackClassName="h-full w-full object-contain p-8 transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
           />

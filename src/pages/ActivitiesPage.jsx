@@ -179,8 +179,8 @@ export default function ActivitiesPage() {
                 <ActivityImage
                   src={activeImg}
                   alt={viewingItem.titleAr || (typeof viewingItem.title === "object" ? viewingItem.title?.ar : viewingItem.title) || ""}
-                  containerClassName="overflow-hidden rounded-xl bg-surface border border-[#E5E7E5] max-h-72 h-56 w-full flex items-center justify-center"
-                  className="w-full h-full object-cover"
+                  fit="blur"
+                  containerClassName="h-80 w-full rounded-xl bg-surface border border-[#E5E7E5]"
                   fallbackClassName="h-full w-full object-contain p-6"
                 />
 
@@ -200,12 +200,12 @@ export default function ActivitiesPage() {
                         <ActivityImage
                           src={img}
                           alt=""
+                          fit="blur"
                           containerClassName="h-12 w-16 bg-gray-100"
-                          className="h-full w-full object-cover"
                           fallbackClassName="h-full w-full object-contain p-1"
                         />
                         {idx === 0 && (
-                          <span className="absolute bottom-0.5 start-0.5 rounded bg-[#0D3B2E] px-1 text-[8px] font-bold text-white">
+                          <span className="absolute bottom-0.5 start-0.5 z-10 rounded bg-[#0D3B2E] px-1 text-[8px] font-bold text-white">
                             غلاف
                           </span>
                         )}

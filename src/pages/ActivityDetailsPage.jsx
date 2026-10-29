@@ -97,7 +97,7 @@ export default function ActivityDetailsPage() {
           <div className="mb-8 h-10 w-2/3 animate-pulse rounded-lg bg-gray-200" />
 
           {/* Hero Image Skeleton */}
-          <div className="mb-10 h-72 w-full animate-pulse rounded-3xl bg-gray-200 sm:h-96 md:h-[450px]" />
+          <div className="mb-10 h-[420px] w-full animate-pulse rounded-3xl bg-gray-200 sm:h-[560px]" />
 
           {/* Description Paragraphs Skeleton */}
           <div className="space-y-4 rounded-2xl bg-white p-8 shadow-xs">
@@ -317,13 +317,14 @@ export default function ActivityDetailsPage() {
 
           {/* Hero Image / Gallery Section */}
           <div className="relative w-full bg-gray-100">
-            {/* Main Active Image Display */}
-            <div className="relative w-full flex items-center justify-center overflow-hidden bg-gray-950/5">
+            {/* Main Active Image Display: الصورة كاملة بدون قص فوق خلفية ضبابية */}
+            <div className="relative w-full overflow-hidden bg-gray-950/5">
               <ActivityImage
                 src={currentImage}
                 alt={displayTitle}
-                containerClassName="w-full max-h-[520px] min-h-[300px] sm:min-h-[400px] flex items-center justify-center overflow-hidden"
-                className="max-h-[520px] w-full object-cover transition-all duration-300"
+                fit="blur"
+                containerClassName="h-[420px] sm:h-[560px] w-full"
+                className="transition-all duration-300"
                 fallbackClassName="h-72 sm:h-96 w-full object-contain p-12"
                 loading="eager"
               />
@@ -394,12 +395,12 @@ export default function ActivityDetailsPage() {
                         <ActivityImage
                           src={imgUrl}
                           alt={`Thumbnail ${idx + 1}`}
-                          containerClassName="h-16 w-20 sm:h-18 sm:w-24 bg-gray-100"
-                          className="h-full w-full object-cover"
+                          fit="blur"
+                          containerClassName="h-16 w-20 sm:h-[72px] sm:w-24 bg-gray-100"
                           fallbackClassName="h-full w-full object-contain p-2"
                         />
                         {isCover && (
-                          <span className="absolute bottom-1 start-1 rounded bg-[#0D3B2E]/90 px-1.5 py-0.5 text-[9px] font-bold text-white shadow-xs">
+                          <span className="absolute bottom-1 start-1 z-10 rounded bg-[#0D3B2E]/90 px-1.5 py-0.5 text-[9px] font-bold text-white shadow-xs">
                             {t("activitiesPage.details.coverImageLabel") || "غلاف"}
                           </span>
                         )}
