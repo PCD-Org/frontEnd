@@ -16,8 +16,8 @@ const Activities = lazy(() => import("./pages/Activities"));
 const ActivityDetailsPage = lazy(() => import("./pages/ActivityDetailsPage"));
 const Research = lazy(() => import("./pages/Research"));
 const News = lazy(() => import("./pages/News"));
-const Donate = lazy(() => import("./pages/Donate"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const Donate = lazy(() => import("./pages/Donate"));
 
 // Lazy-loaded Admin Pages
 const LoginPage = lazy(() => import("./pages/LoginPage"));
@@ -65,10 +65,7 @@ function App() {
               <Route path="/news" element={<News />} />
               <Route path="*" element={<NotFound />} />
             </Route>
-
-            {/* Donate page (standalone, has its own back + language buttons) */}
             <Route path="/donate" element={<Donate />} />
-
             <Route path="/admin/login" element={<LoginPage />} />
 
             <Route
