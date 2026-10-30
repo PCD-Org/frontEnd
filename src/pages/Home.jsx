@@ -4,6 +4,7 @@ import { OurGoals } from "../components/home/OurGoals";
 import { Qoute } from "../components/home/Qoute";
 import { WhoWeAre } from "../components/home/WhoWeAre";
 import Activities from "../components/home/Activities";
+import Partners from "../components/home/Partners";
 
 export default function Home() {
   return (
@@ -18,7 +19,7 @@ export default function Home() {
       <OurGoals />
       <Qoute />
       <Activities />
+      <Partners />
     </>
   );
 }
-
